@@ -1,0 +1,27 @@
+{
+  "name" : "olp-example",
+  "version" : "0.0.1",
+  "title" : "Outlearn Package Example",
+  "description": "An OLP (Outlearn Package) is a directory containing an Outlearn learning module in a format compatible for import into the Outlearn learning catalog.  This example acts as a simple template for creating your own Outlearn modules.",
+  "sections" : [
+    {
+      "title": "Getting Started",
+      "location": "sections/getting-started.md"
+    },
+    {
+      "title": "Advanced Features",
+      "location": "sections/advanced-features.md"
+    },
+    {
+      "title": "More Resources",
+      "location": "sections/more-resources.md"
+    },
+  ],
+  "assets" : [
+    {
+      "ref" : "screencast-video",
+      "contentType" : "video/mp4",
+      "location" : "assets/olp-screencast.mp4"
+    }
+  ]
+}
