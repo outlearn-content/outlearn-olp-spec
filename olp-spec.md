@@ -156,6 +156,15 @@ As shown above, assets are referenced inside section Markdown.  Here, we describ
 
 Options for an asset may be specified in the outlearn.json file.  Alternatively, they may be specified as comma-separated attribute/value pairs in the `@asset` annotation.  The annotation value takes precedence.
 
+### Common Attributes
+
+All assets have the following attributes in common:
+
+* **ref** - string.  A reference name which will be used in `section` content to embed this asset.  Allowed characters are alphanumeric, dash, and underscore (`[a-zA-Z0-9_-]*`)
+* **contentType** - string, default "url". By convention, Outlearn uses standard MIME types where possible.  But the `contentType` is not a true MIME type.  Many custom asset types do not map to standard MIME types.  If you are embedding or packaging an asset without a special type, you should include a standard MIME type in the `contentType` field, as Outlearn will continue to add support for more standards, and your content may benefit from future improvements in how assets are rendered to the learner.  If a contentType is declared that Outlearn does not recognize, it will default to providing a simple link to load the asset in a new browser tab.
+* **location** - string.  Packaged assets must live in the directory tree under the root of the `outlearn.json` that declares them.  By convention, they live under the `./assets` directory, but any directory structure may be used.  For clarity in these examples, we include a `./` prefix to indicate the current directory, but a simple `assets/asset_file` will work just as well.
+
+
 ### Plain Text
 
 ```json
@@ -203,7 +212,7 @@ If conservation of paragraph formatting is desired within text content, the `tex
 Since sections are already written natively in Markdown, we encourage content to be written inline when possible.  The Markdown asset type allows you to use a pre-existing Markdown files.  The Markdown will be rendered as if they were inlined directly into the section.  The same sanitization and other github variant rules apply.
 
 
-### Code Snippets
+### Code Snippet
 
 ```json
 {
@@ -231,12 +240,36 @@ Since sections are already written natively in Markdown, we encourage content to
 Markdown provides native support for code blocks.  If found, these code blocks will also get rendered by our syntax-highlighting library.  Code blocks using triple back-tick (```lang) are supported just like on Github.  If more control is desired, or if you need to reference code samples that are already self contained in separate files, a Code Snippet asset may be more convenient.
 
 
+### Video
+
+```json
+{
+  "ref" : "my-video",
+  "contentType" : "video/mp4",
+  "location" : "./assets/my-video.mp4",
+  "allowFullScreen" : true,
+  "transcriptTimings" : "./assets/my-video-transcript.txt",
+  "subtitles" : "./assets/my-video.srt",
+  "startTime" : 15
+}
+```
+
+```markdown
+<!-- @asset, ref: 'my-video', startTime: '321', endTime: '381' -->
+```
+
+#### Options
+
+* **allowFullScreen** - boolean, default true.  Whether to include a full-screen button in the player
+
+#### Notes
+
+Markdown provides native support for code blocks.  If found, these code blocks will also get rendered by our syntax-highlighting library.  Code blocks using triple back-tick (```lang) are supported just like on Github.  If more control is desired, or if you need to reference code samples that are already self contained in separate files, a Code Snippet asset may be more convenient.
+
 -------------------------------------
 
 (more to document)
-* Code - text/code
 * URL - url (special behaviors for various kinds of URLs, some documented here)
-* Video - video/mp4
 * Image - image/jpeg
 * Audio - audio/mp3
 
