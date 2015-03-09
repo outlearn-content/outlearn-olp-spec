@@ -13,7 +13,7 @@ The OLP format aims to:
 
 A lightweight alternative to OLP exists in the form of Outlearn Markdown (*OLM*).  For many short, simple modules of learning content, OLM may be a preferred authoring format. [Read the full OLM specification](https://github.com/outlearn-content/outlearn-olm-spec/blob/master/olm-spec.md)
 
-## Basic Structure
+## Basic OLP Structure
 
 An OLP directory must contain an `outlearn.json` manifest file at its root.  The basic structure includes
 * metadata about the module
