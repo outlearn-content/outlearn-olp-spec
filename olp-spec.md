@@ -44,7 +44,7 @@ A very simple `outlearn.json` file:
   ],
   "assets" : [
     {
-      "ref" : "screencast-video",
+      "name" : "screencast-video",
       "contentType" : "video/mp4",
       "location" : "assets/olp-screencast.mp4"
     }
@@ -56,7 +56,9 @@ In this example, we specify a few of the most common meta data fields, `name`, `
 
 ### Unknown JSON keys and JSON comments
 
-The outlearn parser will ignore any unrecognized fields in the `outlearn.json` file.  And the specification ensures that no supported keys will ever start with an underscore character (`_`), so such fields are safe to use for comments or other custom data in your files.
+The outlearn parser will ignore any unrecognized field in `outlearn.json` that starts with an underscore character (`_`), but will raise errors for any unrecognized field that does not start with an underscore character (`_`).
+
+The OLP specification ensures that no supported keys will ever start with an underscore character (`_`), so such fields are safe to use for comments or other custom data in your files.
 
 
 ## Metadata Fields
@@ -113,12 +115,12 @@ Using an `@asset` annotation in a Markdown content section, you can include a re
 
 The following screencast does a good job of
 
-<!-- @asset, ref: 'screencast-video' -->
+<!-- @asset, name: 'screencast-video' -->
 
 In the next section, we'll go through the whole process in more detail, talk about error handling, and how to write tests for our code.
 ```
 
-An `@asset` annotation must be the only thing in a content, and for maximum compatibility, we recommend the comment be on a line by itself.  The `ref` attribute is required, its value set to the named reference for the asset declared in `outlearn.json`  Additional attribute/value pairs may be applicable for certain asset types, see detailed documentation below on supported types and their options.
+An `@asset` annotation must be the only thing in a content, and for maximum compatibility, we recommend the comment be on a line by itself.  The `name` attribute is required, its value set to the named reference for the asset declared in `outlearn.json`  Additional attribute/value pairs may be applicable for certain asset types, see detailed documentation below on supported types and their options.
 
 ### Module Sections
 
@@ -138,7 +140,7 @@ This will embed version 1.2.0 of the W3C organizations "Intro to HTML5" from the
 
 #### Packaged Modules
 
-You may also declare sub-modules in your package directly.  To embed them, reference the OLP json or the OLM markdown file location in the JSON section:
+You may also declare sub-modules in your package directly.  To embed them, reference the OLP json or the OLM markdown file location in the JSON section and provide a contentType field ( either outlearn/olm or outlearn/olp ):
 
 ```json
 {
@@ -147,6 +149,8 @@ You may also declare sub-modules in your package directly.  To embed them, refer
   "location" : "modules/my-other-great-module.md"
 }
 ```
+
+If you do not provide a contentType, one will be guessed from the extension of the file. (.md, .olm, or .olp)
 
 When the Outlearn importer processes this `outlearn.json` file, it will recursively process any included modules found in the tree.
 
@@ -160,7 +164,7 @@ Options for an asset may be specified in the outlearn.json file.  Alternatively,
 
 All assets have the following attributes in common:
 
-* **ref** - string.  A reference name which will be used in `section` content to embed this asset.  Allowed characters are alphanumeric, dash, and underscore (`[a-zA-Z0-9_-]*`)
+* **name** - string.  A reference name which will be used in `section` content to embed this asset.  Allowed characters are alphanumeric, dash, and underscore (`[a-zA-Z0-9_-]*`)
 * **contentType** - string, default "url". By convention, Outlearn uses standard MIME types where possible.  But the `contentType` is not a true MIME type.  Many custom asset types do not map to standard MIME types.  If you are embedding or packaging an asset without a special type, you should include a standard MIME type in the `contentType` field, as Outlearn will continue to add support for more standards, and your content may benefit from future improvements in how assets are rendered to the learner.  If a contentType is declared that Outlearn does not recognize, it will default to providing a simple link to load the asset in a new browser tab.
 * **location** - string.  Packaged assets must live in the directory tree under the root of the `outlearn.json` that declares them.  By convention, they live under the `./assets` directory, but any directory structure may be used.  For clarity in these examples, we include a `./` prefix to indicate the current directory, but a simple `assets/asset_file` will work just as well.
 
@@ -169,7 +173,7 @@ All assets have the following attributes in common:
 
 ```json
 {
-  "ref" : "my-text",
+  "name" : "my-text",
   "contentType" : "text/plain",
   "location" : "./assets/my-text.txt",
   "pre": true
@@ -177,7 +181,7 @@ All assets have the following attributes in common:
 ```
 
 ```markdown
-<!-- @asset, ref: 'my-text', pre: true -->
+<!-- @asset, name: 'my-text', pre: true -->
 ```
 
 #### Options
@@ -193,14 +197,14 @@ If conservation of paragraph formatting is desired within text content, the `tex
 
 ```json
 {
-  "ref" : "my-markdown",
+  "name" : "my-markdown",
   "contentType" : "text/markdown",
   "location" : "./assets/my-markdown.md",
 }
 ```
 
 ```markdown
-<!-- @asset, ref: 'my-markdown' -->
+<!-- @asset, name: 'my-markdown' -->
 ```
 
 #### Options
@@ -216,7 +220,7 @@ Since sections are already written natively in Markdown, we encourage content to
 
 ```json
 {
-  "ref" : "my-ruby-snippet",
+  "name" : "my-ruby-snippet",
   "contentType" : "text/code",
   "location" : "./assets/my-ruby-snippet.rb",
   "syntax" : "ruby",
@@ -226,7 +230,7 @@ Since sections are already written natively in Markdown, we encourage content to
 ```
 
 ```markdown
-<!-- @asset, ref: 'my-ruby-snippet', syntax: 'ruby', highlighting: true, lineNumbers: false -->
+<!-- @asset, name: 'my-ruby-snippet', syntax: 'ruby', highlighting: true, lineNumbers: false -->
 ```
 
 #### Options
@@ -244,7 +248,7 @@ Markdown provides native support for code blocks.  If found, these code blocks w
 
 ```json
 {
-  "ref" : "my-video",
+  "name" : "my-video",
   "contentType" : "video/mp4",
   "location" : "./assets/my-video.mp4",
   "allowFullScreen" : true,
@@ -255,7 +259,7 @@ Markdown provides native support for code blocks.  If found, these code blocks w
 ```
 
 ```markdown
-<!-- @asset, ref: 'my-video', startTime: '321', endTime: '381' -->
+<!-- @asset, name: 'my-video', startTime: '321', endTime: '381' -->
 ```
 
 #### Options
