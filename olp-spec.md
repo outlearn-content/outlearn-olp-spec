@@ -103,7 +103,7 @@ Markdown files are processed as [Github-Flavored Markdown](https://help.github.c
 **Note**: Any HTML contained in Markdown will be sanitized according to the same [rules that Github uses](https://github.com/github/markup/tree/master#html-sanitization).
 
 
-#### Referenced Assets
+#### Remote Assets
 
 Using an `@asset` annotation in a Markdown content section, you can include a reference to an Outlearn-supported asset type
 
@@ -133,6 +133,8 @@ One of the core tenets of the Outlearn system is that content is modular.  Often
 ```
 
 This will embed version 1.2.0 of the W3C organizations "Intro to HTML5" from the outlearn catalog as a section within your module.
+
+Module sections can have `title` attributes that override the title defined for the module.
 
 **Note**: some modules may have many sections or other modules inside them.  With great power comes great responsibility.  It is up to you to maintain a sane learning experience for your readers.
 
@@ -274,13 +276,13 @@ Markdown provides native support for code blocks.  If found, these code blocks w
 * Audio - audio/mp3
 
 
-## Referenced Asset Types
+## Remote Asset Types
 
 In addition to assets that you create and include in your Outlearn Package directory structure, Sections can reference assets that are hosted elsewhere.  Below is the set of asset types that can be referenced.
 
 In many cases, Markdown itself allows simple assets to be included.  For example, an image referenced from the web.
 
-**Note**: Referenced Assets are not declared in the outlearn.json file.  They are parsed directly from the `@asset` annotation syntax via their URL instead of an OLP reference ID.
+**Note**: Remote Assets are not declared in the outlearn.json file.  They are parsed directly from the `@asset` annotation syntax via their URL instead of an OLP reference ID.
 
 ### Videos
 
