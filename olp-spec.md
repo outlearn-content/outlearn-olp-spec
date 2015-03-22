@@ -44,7 +44,7 @@ A very simple `outlearn.json` file:
   ],
   "assets" : [
     {
-      "ref" : "screencast-video",
+      "name" : "screencast-video",
       "contentType" : "video/mp4",
       "location" : "assets/olp-screencast.mp4"
     }
@@ -171,7 +171,7 @@ All assets have the following attributes in common:
 
 ```json
 {
-  "ref" : "my-text",
+  "name" : "my-text",
   "contentType" : "text/plain",
   "location" : "./assets/my-text.txt",
   "pre": true
@@ -195,7 +195,7 @@ If conservation of paragraph formatting is desired within text content, the `tex
 
 ```json
 {
-  "ref" : "my-markdown",
+  "name" : "my-markdown",
   "contentType" : "text/markdown",
   "location" : "./assets/my-markdown.md",
 }
@@ -218,7 +218,7 @@ Since sections are already written natively in Markdown, we encourage content to
 
 ```json
 {
-  "ref" : "my-ruby-snippet",
+  "name" : "my-ruby-snippet",
   "contentType" : "text/code",
   "location" : "./assets/my-ruby-snippet.rb",
   "syntax" : "ruby",
@@ -246,7 +246,7 @@ Markdown provides native support for code blocks.  If found, these code blocks w
 
 ```json
 {
-  "ref" : "my-video",
+  "name" : "my-video",
   "contentType" : "video/mp4",
   "location" : "./assets/my-video.mp4",
   "allowFullScreen" : true,
