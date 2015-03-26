@@ -286,6 +286,12 @@ In many cases, Markdown itself allows simple assets to be included.  For example
 
 ### Videos
 
+Document here:
+
+* The "provider" attribute
+* Supported video providers and their names
+* Providers don't have to be specified when they can be inferred from the URL. For example, "http://www.youtube.com/embed/M7lc1UVf-VE" includes "youtube.com" from which it's clear that YouTube is the provider.
+
 ### Images
 
 ### Audio
