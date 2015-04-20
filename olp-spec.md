@@ -1,24 +1,26 @@
 # Outlearn Package
 
-An Outlearn Package, or *OLP* is a directory containing learning content and packaged assets (i.e. assets uploaded directly along with your package) for import into the Outlearn learning catalog.
+> THIS IS A DRAFT DOCUMENT - WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF April 17, 2015
 
-At a top-level, an OLP directory contains an *outlearn.json* file which describes a learning module, along with any sub-module definitions and assets like video files, images, code snippets, markdown content, or other supported Outlearn asset types.
+An Outlearn Package, or *OLP* is a directory containing learning content and packaged assets (i.e. assets like video or images uploaded directly along with your package) for import into the Outlearn learning catalog.
+
+At the top-level, an OLP directory must contain an `outlearn.json` file which describes a learning module, references the markdown files for the content of each section, and declares assets like video files, images, code snippets, markdown content, or other supported Outlearn asset types.
 
 The OLP format aims to:
 
-1. Make it easy to author developer learning content in your native tools, and confidently import to Outlearn where it can be discovered and consumed.
+1. Make it easy to author developer learning content in your native tools, and confidently import to Outlearn where it can be discovered and consumed in an effective learning environment.
 2. Provide a simple format into which existing content can be programmatically transformed, making it convenient to migrate existing learning materials from diverse sources into Outlearn-compatible modules.
 
 ### A note on OLM (Outlearn Markdown)
 
-A lightweight alternative to OLP exists in the form of Outlearn Markdown (*OLM*).  For many short, simple modules of learning content, OLM may be a preferred authoring format. [Read the full OLM specification](https://github.com/outlearn-content/outlearn-olm-spec/blob/master/olm-spec.md)
+A lightweight, single-file alternative to OLP exists in the form of Outlearn Markdown (*OLM*).  For many short, simple modules of learning content, OLM may be a preferred authoring format. [Read the full OLM specification](https://github.com/outlearn-content/outlearn-olm-spec/blob/master/olm-spec.md)
 
 ## Basic OLP Structure
 
 An OLP directory must contain an `outlearn.json` manifest file at its root.  The basic structure includes
 * metadata about the module
-* a `sections` array, describing the various sections of content that will appear in the table of contents, and against which learners will track progress through a module.
-* an `assets` array, which provides an identifier for each bundled asset, so it can be referenced in Markdown section content where those assets are to be displayed
+* a `sections` array, describing the various sections of content, which creates the table of contents
+* an `assets` array, which declares an identifier for each packaged asset, so it can be referenced in Markdown section content where those assets are to be displayed
 
 A very simple `outlearn.json` file:
 
@@ -52,7 +54,7 @@ A very simple `outlearn.json` file:
 }
 ```
 
-In this example, we specify a few of the most common meta data fields, `name`, `version`, `title`, and `description`.  We show three `sections` of this learning module, each of them a markdown file containing the content.  And we declare one `asset` containing a screencast about the topic, which you can assume is referenced in one of the markdown files as described later.
+In this example, we specify a few of the most common meta data fields, `name`, `version`, `title`, and `description`.  We show three `sections` of this learning module, each of them a markdown file containing the content.  And we declare one `asset` containing a screencast about the topic, which you can assume is referenced in one of the markdown files as described later in this document.
 
 ### Unknown JSON keys and JSON comments
 
@@ -63,20 +65,17 @@ The outlearn parser will ignore any unrecognized fields in the `outlearn.json` f
 
 | Req |     Field    |                                             Example                                             |           Notes           |
 |:---:|:------------:|:-----------------------------------------------------------------------------------------------:|:-------------------------:|
-|     | olpVersion   | "olpVersion": "0.1"                                                                             |                           |
-|  X  | name         | "name" : "olp-example"                                                                          |                           |
-|  X  | version      | "version" : "0.0.1"                                                                             |                           |
+|     | olpVersion   | "olpVersion": "0.2"                                                                             |    For now, version 0.2, but will change as this spec evolves.                       |
+|  X  | name         | "name" : "olp-example"                                                                          |       Must be unique within your outlearn account, can contain only letters, numbers, dashes, and underscores.                    |
+|  X  | version      | "version" : "0.0.1"                                                                             |   Your own version of the module.  This is a semantic version string of your choosing.                        |
 |  X  | title        | "title" : "Outlearn Package Example"                                                            |                           |
 |  X  | description  | "description": "This example acts as a simple template for creating your own Outlearn modules." |                           |
-|     | type         | "type": "module"                                                                                | Can be "module" or "path" |
-|     | labels       |                                                                                                 |                           |
-|     | authors      | "authors": [{"name": "Will Koffel","email": "will@outlearn.com","twitter": "willk"}]            |                           |
-|     | organization |                                                                                                 |                           |
-|     | license      |                                                                                                 |                           |
-|     | git          |                                                                                                 |                           |
-|     | homepage     |                                                                                                 |                           |
-|     | credits      |                                                                                                 |                           |
-|     | contact      |                                                                                                 |                           |
+|     | labels       |  "labels": ["outlearn", "learning", "documentation"]                                                                                               |                Tags you want to include when searching for this module.           |
+|     | authors      | "authors": [{"name": "Will Koffel","email": "will@outlearn.com","twitter": "wkoffel"}]            |                           |
+|     | organization |      "organization" : "Outlearn"                                                                                           |        Your company name.                   |
+|     | license      |     "license": "CC-BY"                                                                                            |       May be any license you choose.                    |
+|     | git          |    "git": "outlearn-content/outlearn-olp-spec"                                                                                             |       A github repository of your choosing.  Should be directly related to this learning content, such as the open-source project that is being taught here.                    |
+|     | homepage     |   "homepage": "http://www.outlearn.com"                                                                                              |     A homepage for yourself, company, or project.                      |
 
 ## Sections Array
 
@@ -84,26 +83,28 @@ The `sections` of a module have special meaning.  They show up in the table of c
 
 A section may be one of two types:
 
-1. A Markdown file with content and asset references
-2. An Outlearn module, either hosted on Outlearn, or contained in the OLP directory
+1. A Markdown file with content and asset annotations
+2. An Outlearn module, either hosted on Outlearn, or contained in the OLP directory.  **Note**: this type is rare, only used in limited situations where compositing modules without using a Path is appropriate.
 
 ### Content Sections
 
 Sections are written as Markdown files.  To include content for a section, put it in a Markdown file (by convention inside a *sections* directory under the OLP root directory) and reference it in your JSON:
 
 ```json
+
 {
   "title": "Getting Started",
   "location": "sections/getting-started.md"
 }
+
 ```
 
-Markdown files are processed as [Github-Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/).  After being processed, assets are inlined.
+Markdown files are processed as [Github-Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/).  After being processed, and asset annotations are inlined.
 
 **Note**: Any HTML contained in Markdown will be sanitized according to the same [rules that Github uses](https://github.com/github/markup/tree/master#html-sanitization).
 
 
-#### Referenced Assets
+#### Referencing Assets
 
 Using an `@asset` annotation in a Markdown content section, you can include a reference to an Outlearn-supported asset type
 
@@ -113,23 +114,27 @@ Using an `@asset` annotation in a Markdown content section, you can include a re
 
 The following screencast does a good job of
 
-<!-- @asset, ref: 'screencast-video' -->
+<!-- @asset, name: 'screencast-video' -->
 
 In the next section, we'll go through the whole process in more detail, talk about error handling, and how to write tests for our code.
 ```
 
-An `@asset` annotation must be the only thing in a content, and for maximum compatibility, we recommend the comment be on a line by itself.  The `ref` attribute is required, its value set to the named reference for the asset declared in `outlearn.json`  Additional attribute/value pairs may be applicable for certain asset types, see detailed documentation below on supported types and their options.
+An `@asset` annotation must be the only thing in the comment, and for maximum compatibility, the comment should be on a line by itself.  The `ref` attribute is required, its value set to the named reference for the asset declared in `outlearn.json`  Additional attribute/value pairs may be applicable for certain asset types, see detailed documentation below on supported types and their options.
 
 ### Module Sections
+
+> **Note**: module sections may be deprecated, including Packaged modules.  Forthcoming documentation describing `Paths`  will be the preferred way to composite learning modules into bigger content experiences.
 
 One of the core tenets of the Outlearn system is that content is modular.  Often, a great useful piece of learning content will be relevant in a larger learning module you are creating.
 
 ```json
+
 {
   "type" : "module",
   "location" : "outlearn://w3c/intro-to-html5",
   "version" : "1.2.0"
 }
+
 ```
 
 This will embed version 1.2.0 of the W3C organizations "Intro to HTML5" from the outlearn catalog as a section within your module.
@@ -239,12 +244,12 @@ Since sections are already written natively in Markdown, we encourage content to
 
 Markdown provides native support for code blocks.  If found, these code blocks will also get rendered by our syntax-highlighting library.  Code blocks using triple back-tick (```lang) are supported just like on Github.  If more control is desired, or if you need to reference code samples that are already self contained in separate files, a Code Snippet asset may be more convenient.
 
-
 ### Video
 
 ```json
+
 {
-  "ref" : "my-video",
+  "name" : "my-video",
   "contentType" : "video/mp4",
   "location" : "./assets/my-video.mp4",
   "allowFullScreen" : true,
@@ -252,10 +257,13 @@ Markdown provides native support for code blocks.  If found, these code blocks w
   "subtitles" : "./assets/my-video.srt",
   "startTime" : 15
 }
+
 ```
 
 ```markdown
+
 <!-- @asset, ref: 'my-video', startTime: '321', endTime: '381' -->
+
 ```
 
 #### Options
@@ -268,25 +276,18 @@ Markdown provides native support for code blocks.  If found, these code blocks w
 
 -------------------------------------
 
-(more to document)
+### More Types Coming Soon
+
 * URL - url (special behaviors for various kinds of URLs, some documented here)
 * Image - image/jpeg
 * Audio - audio/mp3
 
 
-## Referenced Asset Types
+## Remote Asset Types
 
-In addition to assets that you create and include in your Outlearn Package directory structure, Sections can reference assets that are hosted elsewhere.  Below is the set of asset types that can be referenced.
+In addition to assets that you create and include in your Outlearn Package directory structure, Sections can reference assets that are hosted elsewhere.  For examples, see the [OLM Specification](http://www.github.com/outlearn-content/outlearn-olm-spec)
 
-In many cases, Markdown itself allows simple assets to be included.  For example, an image referenced from the web.
-
-**Note**: Referenced Assets are not declared in the outlearn.json file.  They are parsed directly from the `@asset` annotation syntax via their URL instead of an OLP reference ID.
-
-### Videos
-
-### Images
-
-### Audio
+**Note**: Remote Assets are not declared in the outlearn.json file.  They are parsed directly from the `@asset` annotation syntax via their URL instead of an OLP reference name.
 
 
 ### Future asset types
@@ -296,3 +297,13 @@ Outlearn is considering support for future asset types; in particular more rich 
 * SSH Terminal (to connect to a particular machine and run commands)
 * REPL (with support for various languages)
 * Docker image (with links to launch on various platforms depending on team integrations)
+
+# Importing OLP
+
+To import an OLP directory to Outlearn, put it in a Github repo that is public or that you are authorized to access.  Log in to Outlearn with your Github credentials (or link your Github account under *Settings*), and navigate to *Import Module*, where you can specify the Github location for your module which will then be imported into your Outlearn account.
+
+Many more details on import are coming, including information about a command-line API for importing, and imports from additional web-based sources.
+
+# Example OLP
+
+For many examples of content in OLM and OLP format, please refer to the [Outlearn Content](http://www.github.com/outlearn-content) repo on Github.
