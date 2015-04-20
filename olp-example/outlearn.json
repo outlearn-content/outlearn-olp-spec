@@ -19,7 +19,7 @@
   ],
   "assets" : [
     {
-      "ref" : "screencast-video",
+      "name" : "screencast-video",
       "contentType" : "video/mp4",
       "location" : "assets/olp-screencast.mp4"
     }

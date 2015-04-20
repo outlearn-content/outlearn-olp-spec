@@ -46,7 +46,7 @@ A very simple `outlearn.json` file:
   ],
   "assets" : [
     {
-      "ref" : "screencast-video",
+      "name" : "screencast-video",
       "contentType" : "video/mp4",
       "location" : "assets/olp-screencast.mp4"
     }
@@ -104,7 +104,7 @@ Markdown files are processed as [Github-Flavored Markdown](https://help.github.c
 **Note**: Any HTML contained in Markdown will be sanitized according to the same [rules that Github uses](https://github.com/github/markup/tree/master#html-sanitization).
 
 
-#### Referencing Assets
+#### Remote Assets
 
 Using an `@asset` annotation in a Markdown content section, you can include a reference to an Outlearn-supported asset type
 
@@ -138,6 +138,8 @@ One of the core tenets of the Outlearn system is that content is modular.  Often
 ```
 
 This will embed version 1.2.0 of the W3C organizations "Intro to HTML5" from the outlearn catalog as a section within your module.
+
+Module sections can have `title` attributes that override the title defined for the module.
 
 **Note**: some modules may have many sections or other modules inside them.  With great power comes great responsibility.  It is up to you to maintain a sane learning experience for your readers.
 
@@ -174,7 +176,7 @@ All assets have the following attributes in common:
 
 ```json
 {
-  "ref" : "my-text",
+  "name" : "my-text",
   "contentType" : "text/plain",
   "location" : "./assets/my-text.txt",
   "pre": true
@@ -198,7 +200,7 @@ If conservation of paragraph formatting is desired within text content, the `tex
 
 ```json
 {
-  "ref" : "my-markdown",
+  "name" : "my-markdown",
   "contentType" : "text/markdown",
   "location" : "./assets/my-markdown.md",
 }
@@ -221,7 +223,7 @@ Since sections are already written natively in Markdown, we encourage content to
 
 ```json
 {
-  "ref" : "my-ruby-snippet",
+  "name" : "my-ruby-snippet",
   "contentType" : "text/code",
   "location" : "./assets/my-ruby-snippet.rb",
   "syntax" : "ruby",
@@ -287,8 +289,7 @@ Markdown provides native support for code blocks.  If found, these code blocks w
 
 In addition to assets that you create and include in your Outlearn Package directory structure, Sections can reference assets that are hosted elsewhere.  For examples, see the [OLM Specification](http://www.github.com/outlearn-content/outlearn-olm-spec)
 
-**Note**: Remote Assets are not declared in the outlearn.json file.  They are parsed directly from the `@asset` annotation syntax via their URL instead of an OLP reference name.
-
+**Note**: Remote Assets are not declared in the outlearn.json file.  They are parsed directly from the `@asset` annotation syntax via their URL instead of an OLP reference ID.
 
 ### Future asset types
 
