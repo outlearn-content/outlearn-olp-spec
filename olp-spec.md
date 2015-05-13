@@ -1,65 +1,148 @@
-# Outlearn Package
+# Outlearn Package Specification
 
-> THIS IS A DRAFT DOCUMENT - WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF April 17, 2015
+> THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5- WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF MAY 14, 2015
 
-An Outlearn Package, or *OLP* is a directory containing learning content and packaged assets (i.e. assets like video or images uploaded directly along with your package) for import into the Outlearn learning catalog.
-
-At the top-level, an OLP directory must contain an `outlearn.json` file which describes a learning module, references the markdown files for the content of each section, and declares assets like video files, images, code snippets, markdown content, or other supported Outlearn asset types.
+An Outlearn Package, or *OLP* is a directory containing an `outlearn.json` manifest file defining Paths, Modules, and Assets for import into the Outlearn learning catalog.
 
 The OLP format aims to:
 
-1. Make it easy to author developer learning content in your native tools, and confidently import to Outlearn where it can be discovered and consumed in an effective learning environment.
+1. Make it easy to author developer learning materials in your native tools, and confidently import them to Outlearn where they can be discovered and consumed in a great learning environment.
 2. Provide a simple format into which existing content can be programmatically transformed, making it convenient to migrate existing learning materials from diverse sources into Outlearn-compatible modules.
-
-### A note on OLM (Outlearn Markdown)
-
-A lightweight, single-file alternative to OLP exists in the form of Outlearn Markdown (*OLM*).  For many short, simple modules of learning content, OLM may be a preferred authoring format. [Read the full OLM specification](https://github.com/outlearn-content/outlearn-olm-spec/blob/master/olm-spec.md)
 
 ## Basic OLP Structure
 
-An OLP directory must contain an `outlearn.json` manifest file at its root.  The basic structure includes
-* metadata about the module
-* a `sections` array, describing the various sections of content, which creates the table of contents
-* an `assets` array, which declares an identifier for each packaged asset, so it can be referenced in Markdown section content where those assets are to be displayed
+An OLP directory must contain an `outlearn.json` file at its root.  This manifest file may contain four top-level keys:
 
-A very simple `outlearn.json` file:
+* **"olpVersion"** - a semantic version number representing which version of the OLP format is being used here.  It is encouraged, but *optional*, and will default to the latest version.
+* **"paths"** - an array of path specs imported by this Package.
+* **"modules"** - an array of Learning Module specs imported by this Package.
+* **"assets"** - an array of Assets available to Modules imported by this Package.
+
+Here's a very simple `outlearn.json` file:
 
 ```json
 {
-  "name" : "olp-example",
-  "version" : "0.0.1",
-  "title" : "Outlearn Package Example",
-  "description": "An OLP (Outlearn Package) is a directory containing an Outlearn learning module in a format compatible for import into the Outlearn learning catalog.  This example acts as a simple template for creating your own Outlearn modules.",
-  "sections" : [
+  "olpVersion" : "0.5",
+
+  "paths" : [
     {
-      "title": "Getting Started",
-      "location": "sections/getting-started.md"
-    },
-    {
-      "title": "Advanced Features",
-      "location": "sections/advanced-features.md"
-    },
-    {
-      "title": "More Resources",
-      "location": "sections/more-resources.md"
-    },
+      "name" : "learning-to-tango",
+      "title" : "Learning to Dance the Tango",
+      "description" : "A learning path for those new to the marvelous tango dance, we'll go through all the basics, and all that's left for you to do is practice until your feet are sore!",
+      "privacy" : "public",
+      "pages" : [
+        {"title" : "Introduction", "content" : "./pages/introduction.md"},
+        {"module" : "outlearn://dancer-doreen/history-of-dance"},
+        {"title" : "Why Tango?", "content" : "./pages/why-tango.md"},
+        {"module" : "tango-embrace-basics"},
+        {"module" : "learning-the-tango-steps"},
+        {"title" : "Studio and Practice Resources", "./pages/resources.md"}
+      ]
+    }
   ],
+
+  "modules" : [
+    {
+      "olm" : "./modules/tango-embrace-basics.olm"
+    },
+    {
+      "olm" : "./modules/learning-the-tango-steps.olm"
+    }
+  ],
+
   "assets" : [
     {
-      "name" : "screencast-video",
+      "name" : "steps-video",
       "contentType" : "video/mp4",
-      "location" : "assets/olp-screencast.mp4"
+      "location" : "assets/tango-steps.mp4"
     }
   ]
 }
 ```
 
-In this example, we specify a few of the most common meta data fields, `name`, `version`, `title`, and `description`.  We show three `sections` of this learning module, each of them a markdown file containing the content.  And we declare one `asset` containing a screencast about the topic, which you can assume is referenced in one of the markdown files as described later in this document.
+In this example, we specify a Package which:
 
-### Unknown JSON keys and JSON comments
+1. Uploads and hosts a video asset referenced as `steps-video` to locally imported Modules.
+2. Creates two Learning Modules based on enriched Markdown files (Outlearn Markdown, aka *OLM*)
+3. Assembles a single Path called `learning-to-tango`, out of those two created Modules, one Module from another source in the Outlearn catalog, and three Path Pages with content from local Markdown files.
+
+All the details of specifying Paths, Modules, and Assets are described below.
+
+**Note**: an Outlearn Package doesn't have to specify Paths, Modules, *or* Assets.  Each is optional.  OLP may be used to import a Path and all its Modules.  Or perhaps all the independent Modules for a single author, with Paths assembled separately in another OLP import.  The only requirement is that referenced Assets for a Module import must be declared in the same OLP as the Module that uses them.
+
+## Assembling Paths
+
+### Path Metadata
+
+Paths have the following required attributes:
+
+| attribute   | sample                                                       | notes                                                                                                                                      |
+|-------------|---------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| name        | learning-to-tango                                             | A name unique within an Outlearn user or organization, alphanumeric+dashes.                                                                                                               |
+| title       | Learning to Dance the Tango                                   | A human-readable title for your Path.                                                                                                                                                     |
+| description | A great way to learn everyone's favorite dance, step-by-step. | A short description of your Path, to be used when viewing in the Outlearn catalog.                                                                                                        |
+| privacy     | public                                                        | For now, may be "public" or "private".  Private paths will not show up in search or in the public catalog, but are available to the owner, and to any members of the owning organization. |
+| pages       | [ { page_spec }+ ]                                            | An array of at least one Path Page or Learning Module, constituting the Path content itself.                                                                                              |
+
+There are two types of page in a path, *Context Pages* and *Learning Modules*.  Both play an important role as described below.
+
+### Path Pages
+
+Context Pages (or just "Pages") are simple rendered Markdown pages, unique to the Path, which act as interstitials and contextualize the surrounding Modules for your audience.  Pages have varied uses, including:
+
+* Introduction to a Path.  What should your learners expect to get out of this?  Why did you choose to assemble this particular set of Modules together?
+* Important context before beginning a Module.  Maybe this next Module has some gotchas to look out for.  Maybe you want to point out in advance why this content is particularly relevant within your project or organization.
+* Describe offline learning steps.  Pages are a way to put a "pause" in the Path, for example to instruct your learners to wait until their next offline manager meeting before continuing on.
+* Specific concluding thoughts.  What else would you share with your audience as they are digesting this new material?  What final takeaways do you have to solidify the importance of the preceding Modules?
+
+Pages are optional, but highly encouraged.  Without your voice helping to narrate a Path, it is little more than the sum of its Modules.
+
+In the manifest `pages[]` array, Path Pages are defined as:
+
+```json
+{"title" : "Introduction", "content" : "./pages/introduction.md"}
+```
+
+The `title` shows automatically at the top of the Page.  The `content` is rendered from the locally referenced Markdown file, the only currently supported Page content type.  Pages are by convention placed in a `./pages/` directory inside the OLP root.
+
+### Path Modules
+
+The Modules (see below for more on Modules) that make up a path may be listed one of two ways.
+
+A Module that has been independently published in the Outlearn catalog can be assembled directly into a Path.
+
+```json
+{"module" : "outlearn://dancer-doreen/history-of-dance"}
+```
+
+If the Module in question is authored inside this Package, it should be referenced locally:
+
+```json
+{"module" : "tango-embrace-basics"}
+```
+
+QUESTION: do we need both?  TBD
+
+## Defining Modules
+
+Learning Modules (or simply "Modules") are the core units of engaging content on Outlearn.  They are intended to be stand-alone units of learning so they can be re-used in many different Paths.  Modules may be public or private to an organization.
+
+An olp `modules` array contains simple JSON objects, one for each module being imported by this Package.  These modules may or may not be used by Paths defined in the Package, but typically are.
+
+
+
+## Declaring Assets
+
+
+
+
+## Unknown JSON keys and JSON comments
 
 The outlearn parser will ignore any unrecognized fields in the `outlearn.json` file.  And the specification ensures that no supported keys will ever start with an underscore character (`_`), so such fields are safe to use for comments or other custom data in your files.
 
+
+
+# TODO: PULL THIS STUFF OUT INTO OLM DOCS
 
 ## Metadata Fields
 
