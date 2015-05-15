@@ -1,22 +1,22 @@
 # Outlearn Package Specification
 
-> THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5- WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF MAY 14, 2015
+> THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5- WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF MAY 15, 2015
 
 An Outlearn Package, or *OLP* is a directory containing an `outlearn.json` manifest file defining Paths, Modules, and Assets for import into the Outlearn learning catalog.
 
 The OLP format aims to:
 
 1. Make it easy to author developer learning materials in your native tools, and confidently import them to Outlearn where they can be discovered and consumed in a great learning environment.
-2. Provide a simple format into which existing content can be programmatically transformed, making it convenient to migrate existing learning materials from diverse sources into Outlearn-compatible modules.
+2. Provide a simple format into which existing content can be programmatically transformed, making it convenient to migrate existing learning materials from diverse sources into Outlearn-compatible Learning Modules.
 
 ## Basic OLP Structure
 
 An OLP directory must contain an `outlearn.json` file at its root.  This manifest file may contain four top-level keys:
 
-* **"olpVersion"** - a semantic version number representing which version of the OLP format is being used here.  It is encouraged, but *optional*, and will default to the latest version.
-* **"paths"** - an array of path specs imported by this Package.
-* **"modules"** - an array of Learning Module specs imported by this Package.
-* **"assets"** - an array of Assets available to Modules imported by this Package.
+* **"olpVersion"** - a [semantic version number](http://semver.org/) representing which version of the OLP format is being used here.  It is optional, but *encouraged*, and will default to the latest version.
+* **"paths"** - an array of Path specs imported by this package.
+* **"modules"** - an array of Learning Module specs imported by this package.
+* **"assets"** - an array of Assets available to Modules imported by this package.
 
 Here's a very simple `outlearn.json` file:
 
@@ -31,12 +31,12 @@ Here's a very simple `outlearn.json` file:
       "description" : "A learning path for those new to the marvelous tango dance, we'll go through all the basics, and all that's left for you to do is practice until your feet are sore!",
       "privacy" : "public",
       "pages" : [
-        {"title" : "Introduction", "content" : "./pages/introduction.md"},
-        {"module" : "outlearn://dancer-doreen/history-of-dance"},
-        {"title" : "Why Tango?", "content" : "./pages/why-tango.md"},
+        {"page" : "./pages/introduction.md"},
+        {"module" : "dancer-doreen/history-of-dance"},
+        {"page" : "./pages/why-tango.md"},
         {"module" : "tango-embrace-basics"},
         {"module" : "learning-the-tango-steps"},
-        {"title" : "Studio and Practice Resources", "./pages/resources.md"}
+        {"page" : "./pages/resources.md"}
       ]
     }
   ],
@@ -60,35 +60,37 @@ Here's a very simple `outlearn.json` file:
 }
 ```
 
-In this example, we specify a Package which:
+In this example, we specify a package which:
 
-1. Uploads and hosts a video asset referenced as `steps-video` to locally imported Modules.
+1. Uploads and hosts a video asset referenced as "*steps-video*" to locally imported Modules.
 2. Creates two Learning Modules based on enriched Markdown files (Outlearn Markdown, aka *OLM*)
-3. Assembles a single Path called `learning-to-tango`, out of those two created Modules, one Module from another source in the Outlearn catalog, and three Path Pages with content from local Markdown files.
+3. Assembles a single Path called "*learning-to-tango*", out of those two created Modules, one Module from another source in the Outlearn catalog, and three Path Pages with content from local Markdown files.
 
 All the details of specifying Paths, Modules, and Assets are described below.
 
-**Note**: an Outlearn Package doesn't have to specify Paths, Modules, *or* Assets.  Each is optional.  OLP may be used to import a Path and all its Modules.  Or perhaps all the independent Modules for a single author, with Paths assembled separately in another OLP import.  The only requirement is that referenced Assets for a Module import must be declared in the same OLP as the Module that uses them.
+**Note**: an Outlearn Package doesn't have to specify Paths, Modules, *or* Assets.  Each is optional.  OLP may be used to import a Path and all its Modules, or maybe just the independent Modules for a single author, with Paths assembled separately in another OLP import.
 
 ## Assembling Paths
 
+The `paths` array defines specifications for one or more Paths to be imported by this package.
+
 ### Path Metadata
 
-Paths have the following required attributes:
+Each Path specification must have the following required attributes:
 
-| attribute   | sample                                                       | notes                                                                                                                                      |
-|-------------|---------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| name        | learning-to-tango                                             | A name unique within an Outlearn user or organization, alphanumeric+dashes.                                                                                                               |
-| title       | Learning to Dance the Tango                                   | A human-readable title for your Path.                                                                                                                                                     |
-| description | A great way to learn everyone's favorite dance, step-by-step. | A short description of your Path, to be used when viewing in the Outlearn catalog.                                                                                                        |
-| privacy     | public                                                        | For now, may be "public" or "private".  Private paths will not show up in search or in the public catalog, but are available to the owner, and to any members of the owning organization. |
-| pages       | [ { page_spec }+ ]                                            | An array of at least one Path Page or Learning Module, constituting the Path content itself.                                                                                              |
+| attribute | sample | notes |
+|-----------|--------|-------|
+| name | learning-to-tango | unique within an Outlearn user or organization, alphanumeric+dashes |
+| title | Learning to Dance the Tango | A human-readable title for your Path. |
+| description | A great way to learn everyone's favorite dance, step-by-step. | A short description of your Path, to be used when viewing in the Outlearn catalog. |
+| privacy | public | For now, may be "public" or "private".  Private paths will not show up in search or in the public catalog, but are available to the owner, and to any members of the owning organization. |
+| pages | [ { page_spec }+ ] | An array of at least one Path Page or Learning Module, constituting the Path content itself. |
 
-There are two types of page in a path, *Context Pages* and *Learning Modules*.  Both play an important role as described below.
+There are two types of page in a path, *Path Pages* and *Learning Modules*.  Both play an important role as described below.
 
 ### Path Pages
 
-Context Pages (or just "Pages") are simple rendered Markdown pages, unique to the Path, which act as interstitials and contextualize the surrounding Modules for your audience.  Pages have varied uses, including:
+Path Pages (aka "Context Pages", or just "Pages") are simple rendered Markdown pages, specific to the Path, which act as interstitials and contextualize the surrounding Modules for your audience.  Pages have varied uses, including:
 
 * Introduction to a Path.  What should your learners expect to get out of this?  Why did you choose to assemble this particular set of Modules together?
 * Important context before beginning a Module.  Maybe this next Module has some gotchas to look out for.  Maybe you want to point out in advance why this content is particularly relevant within your project or organization.
@@ -100,294 +102,150 @@ Pages are optional, but highly encouraged.  Without your voice helping to narrat
 In the manifest `pages[]` array, Path Pages are defined as:
 
 ```json
-{"title" : "Introduction", "content" : "./pages/introduction.md"}
+{"page" : "./pages/introduction.md"}
 ```
 
-The `title` shows automatically at the top of the Page.  The `content` is rendered from the locally referenced Markdown file, the only currently supported Page content type.  Pages are by convention placed in a `./pages/` directory inside the OLP root.
+The referenced Markdown file supports [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) (but *not* Outlearn OLM enrichments).  A title will be extracted based on a Markdown header of any size at the top of the file (page markdown that does not start with a header will trigger an error on import).  The remainder of the file will be rendered to the body of the page.  Pages are, by convention, placed in a `./pages/` directory inside the OLP root.
 
 ### Path Modules
 
-The Modules (see below for more on Modules) that make up a path may be listed one of two ways.
-
-A Module that has been independently published in the Outlearn catalog can be assembled directly into a Path.
+The Modules (see below for more on Modules) that make up a path are included by reference to their `owner/module-name` in the Outlearn catalog.  If an `owner` is not specified, it defaults to the owner doing the current import.
 
 ```json
-{"module" : "outlearn://dancer-doreen/history-of-dance"}
-```
-
-If the Module in question is authored inside this Package, it should be referenced locally:
-
-```json
+{"module" : "dancer-doreen/history-of-dance"},
 {"module" : "tango-embrace-basics"}
 ```
 
-QUESTION: do we need both?  TBD
+**Note**: the Modules in an OLP import get loaded first.  So referencing a Module loaded in the same import as the referencing Path will work fine, and will include the freshly-imported version.
 
 ## Defining Modules
 
 Learning Modules (or simply "Modules") are the core units of engaging content on Outlearn.  They are intended to be stand-alone units of learning so they can be re-used in many different Paths.  Modules may be public or private to an organization.
 
-An olp `modules` array contains simple JSON objects, one for each module being imported by this Package.  These modules may or may not be used by Paths defined in the Package, but typically are.
+Modules contain one or more Sections, which play an important role.  Section titles are used to build the table of contents for a module, and displayed in various ways within the learning experience.  Sections are also used to track user progress (e.g., a checkbox to indicate a user has completed a section.)
 
+The content for a Module is written in [Markdown](https://help.github.com/articles/github-flavored-markdown), and may by enriched using special HTML-comment annotations in the Markdown (this is called "OLM", or "Outlearn Markdown"), as defined by the [OLM Specification](https://github.com/outlearn-content/outlearn-olm-spec)
 
+**Note**: Any HTML contained in Markdown will be sanitized according to the same [rules that Github uses](https://github.com/github/markup/tree/master#html-sanitization).
+
+### Modules in OLP
+
+An OLP `modules` array contains simple JSON objects, one for each module being imported by this Package.  These modules may or may not be used by Paths defined in the Package, but typically are.
+
+```json
+{
+  "name" : "learning-the-tango-steps",
+  "version" : "1.0",
+  "title" : "Learning the Tango Steps",
+  "license" : "CC-BY",
+  "homepage" : "tango.outlearn.com",
+  "author" : "Dancing Doreen",
+  "organization" : "Outlearn Dance Studios",
+  "description": "An introduction to the steps of the tango, including a video lesson.",
+  "sections" : [
+    {
+      "title": "Basic Steps",
+      "location": "modules/learning-the-tango-steps/sections/basic-steps.md"
+    },
+    {
+      "title": "Corté, Swivel, and Turn",
+      "location": "modules/learning-the-tango-steps/sections/advanced-steps.md"
+    },
+    {
+      "title": "Watch the Pros",
+      "location" : "modules/learning-the-tango-steps/sections/video-lesson.md"
+    }
+  ]
+}
+```
+
+Each element of the `sections` array specifies the Markdown content, which may include [OLM enrichments](https://github.com/outlearn-content/outlearn-olm-spec).
+
+The available attributes for a Learning Module are:
+
+| attribute | required | sample | notes |
+|-----------|----------|--------|-------|
+| name | ✓ | learning-the-tango-steps | unique within an Outlearn user or organization, alphanumeric+dashes |
+| version | ✓ | 1.0 | a [semantic version number](http://semver.org/) |
+| title | ✓ | Learning the Tango Steps | human-readable title for the Module |
+| license |  | CC-BY | A free-form string specifying a license for this content |
+| homepage |  | tango.outlearn.com | URL homepage for this author or original content source |
+| author |  | Dancing Doreen | free-form field for original author credit |
+| organization |  | Outlearn Dance Studios | free-form field specifying an organization related to this content |
+| description | ✓ | An introduction to the steps of the tango. | short description of this Module, to be used various places in the Outlearn content catalog |
+| coverImage |  | ./modules/learning-the-tango-steps/cover.jpg | TODO: what are the details on these? |
+| coverColor |  | #eecc25 | TODO: any limitations? which formats are supported? |
+| sections | ✓ | [ { section_spec }+ ] | An array of at least one Path Page or Learning Module, constituting the Path content itself. |
+
+### An easier way --- Modules in OLM
+
+In many common cases, rather than list all the attributes and sections of a Module in JSON, that information can be written right in the Markdown content file.  
+
+For the example above, the `modules` array would instead include just:
+
+```json
+{ "olm" : "./modules/my-module-full.md"}
+```
+
+And the top of the module OLM file would include any catalog metadata attributes:
+
+```xhtml
+<!--
+"name": "learning-the-tango-steps",
+"version" : "1.0",
+"title" : "Learning the Tango Steps",
+"license" : "CC-BY",
+"homepage" : "tango.outlearn.com",
+"author" : "Dancing Doreen",
+"organization" : "Outlearn Dance Studios",
+"description": "An introduction to the steps of the tango, including a video lesson."
+-->
+```
+
+See [the OLM specification](https://github.com/outlearn-content/outlearn-olm-spec) for more, including how to define *section* breaks, and how to enrich the content with learning features like *todo* items, *multiple choice* exercises, and more.
 
 ## Declaring Assets
 
+Outlearn supports uploading and hosting images and videos.  This is useful for private content, and for some public content that may not be hosted elsewhere, making it hard to reference from regular Markdown.
 
+### Image Assets
+
+You can declare an image asset in OLP:
+
+```json
+"assets" : [
+  {
+    "name" : "architecture-diagram",
+    "contentType" : "image/jpeg",
+    "location" : "assets/production-system.jpeg"
+  }
+]
+```
+
+And then reference that asset in your content Markdown:
+
+```markdown
+### Architecture Diagram
+
+A diagram of our architecture can be seen below:
+
+<!-- @asset, "name": "architecture-diagram" -->
+```
+
+At import time, Outlearn will upload the bundled image asset and replace the `@asset` tag with the appropriate `<img>` tag to render the hosted image in your content.
+
+
+### Video Assets
+
+**Note**: Video upload is not a self-service feature yet.  Please contact support@outlearn.com for help with this feature.
+
+Video assets that are remotely hosted, for example through YouTube or Vimeo, can be included directly from the OLM content.  For examples, see the [OLM Specification](http://www.github.com/outlearn-content/outlearn-olm-spec)
 
 
 ## Unknown JSON keys and JSON comments
 
 The outlearn parser will ignore any unrecognized fields in the `outlearn.json` file.  And the specification ensures that no supported keys will ever start with an underscore character (`_`), so such fields are safe to use for comments or other custom data in your files.
 
-
-
-# TODO: PULL THIS STUFF OUT INTO OLM DOCS
-
-## Metadata Fields
-
-| Req |     Field    |                                             Example                                             |           Notes           |
-|:---:|:------------:|:-----------------------------------------------------------------------------------------------:|:-------------------------:|
-|     | olpVersion   | "olpVersion": "0.2"                                                                             |    For now, version 0.2, but will change as this spec evolves.                       |
-|  X  | name         | "name" : "olp-example"                                                                          |       Must be unique within your outlearn account, can contain only letters, numbers, dashes, and underscores.                    |
-|  X  | version      | "version" : "0.0.1"                                                                             |   Your own version of the module.  This is a semantic version string of your choosing.                        |
-|  X  | title        | "title" : "Outlearn Package Example"                                                            |                           |
-|  X  | description  | "description": "This example acts as a simple template for creating your own Outlearn modules." |                           |
-|     | labels       |  "labels": ["outlearn", "learning", "documentation"]                                                                                               |                Tags you want to include when searching for this module.           |
-|     | authors      | "authors": [{"name": "Will Koffel","email": "will@outlearn.com","twitter": "wkoffel"}]            |                           |
-|     | organization |      "organization" : "Outlearn"                                                                                           |        Your company name.                   |
-|     | license      |     "license": "CC-BY"                                                                                            |       May be any license you choose.                    |
-|     | git          |    "git": "outlearn-content/outlearn-olp-spec"                                                                                             |       A github repository of your choosing.  Should be directly related to this learning content, such as the open-source project that is being taught here.                    |
-|     | homepage     |   "homepage": "http://www.outlearn.com"                                                                                              |     A homepage for yourself, company, or project.                      |
-
-## Sections Array
-
-The `sections` of a module have special meaning.  They show up in the table of contents for your module, and are used by the system to track user progress (e.g., a checkbox that a user can use to mark off that they've completed a section.)  Outlearn expects to use sections in the future for more user-facing functionality.
-
-A section may be one of two types:
-
-1. A Markdown file with content and asset annotations
-2. An Outlearn module, either hosted on Outlearn, or contained in the OLP directory.  **Note**: this type is rare, only used in limited situations where compositing modules without using a Path is appropriate.
-
-### Content Sections
-
-Sections are written as Markdown files.  To include content for a section, put it in a Markdown file (by convention inside a *sections* directory under the OLP root directory) and reference it in your JSON:
-
-```json
-
-{
-  "title": "Getting Started",
-  "location": "sections/getting-started.md"
-}
-
-```
-
-Markdown files are processed as [Github-Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/).  After being processed, and asset annotations are inlined.
-
-**Note**: Any HTML contained in Markdown will be sanitized according to the same [rules that Github uses](https://github.com/github/markup/tree/master#html-sanitization).
-
-
-#### Remote Assets
-
-Using an `@asset` annotation in a Markdown content section, you can include a reference to an Outlearn-supported asset type
-
-```markdown
-
-### Screencast
-
-The following screencast does a good job of
-
-<!-- @asset, name: 'screencast-video' -->
-
-In the next section, we'll go through the whole process in more detail, talk about error handling, and how to write tests for our code.
-```
-
-An `@asset` annotation must be the only thing in the comment, and for maximum compatibility, the comment should be on a line by itself.  The `ref` attribute is required, its value set to the named reference for the asset declared in `outlearn.json`  Additional attribute/value pairs may be applicable for certain asset types, see detailed documentation below on supported types and their options.
-
-### Module Sections
-
-> **Note**: module sections may be deprecated, including Packaged modules.  Forthcoming documentation describing `Paths`  will be the preferred way to composite learning modules into bigger content experiences.
-
-One of the core tenets of the Outlearn system is that content is modular.  Often, a great useful piece of learning content will be relevant in a larger learning module you are creating.
-
-```json
-
-{
-  "type" : "module",
-  "location" : "outlearn://w3c/intro-to-html5",
-  "version" : "1.2.0"
-}
-
-```
-
-This will embed version 1.2.0 of the W3C organizations "Intro to HTML5" from the outlearn catalog as a section within your module.
-
-Module sections can have `title` attributes that override the title defined for the module.
-
-**Note**: some modules may have many sections or other modules inside them.  With great power comes great responsibility.  It is up to you to maintain a sane learning experience for your readers.
-
-#### Packaged Modules
-
-You may also declare sub-modules in your package directly.  To embed them, reference the OLP json or the OLM markdown file location in the JSON section:
-
-```json
-{
-  "type" : "module",
-  "contentType" : "outlearn/olm"
-  "location" : "modules/my-other-great-module.md"
-}
-```
-
-When the Outlearn importer processes this `outlearn.json` file, it will recursively process any included modules found in the tree.
-
-## Packaged Asset Types
-
-As shown above, assets are referenced inside section Markdown.  Here, we describe all the supported asset types.
-
-Options for an asset may be specified in the outlearn.json file.  Alternatively, they may be specified as comma-separated attribute/value pairs in the `@asset` annotation.  The annotation value takes precedence.
-
-### Common Attributes
-
-All assets have the following attributes in common:
-
-* **ref** - string.  A reference name which will be used in `section` content to embed this asset.  Allowed characters are alphanumeric, dash, and underscore (`[a-zA-Z0-9_-]*`)
-* **contentType** - string, default "url". By convention, Outlearn uses standard MIME types where possible.  But the `contentType` is not a true MIME type.  Many custom asset types do not map to standard MIME types.  If you are embedding or packaging an asset without a special type, you should include a standard MIME type in the `contentType` field, as Outlearn will continue to add support for more standards, and your content may benefit from future improvements in how assets are rendered to the learner.  If a contentType is declared that Outlearn does not recognize, it will default to providing a simple link to load the asset in a new browser tab.
-* **location** - string.  Packaged assets must live in the directory tree under the root of the `outlearn.json` that declares them.  By convention, they live under the `./assets` directory, but any directory structure may be used.  For clarity in these examples, we include a `./` prefix to indicate the current directory, but a simple `assets/asset_file` will work just as well.
-
-
-### Plain Text
-
-```json
-{
-  "name" : "my-text",
-  "contentType" : "text/plain",
-  "location" : "./assets/my-text.txt",
-  "pre": true
-}
-```
-
-```markdown
-<!-- @asset, ref: 'my-text', pre: true -->
-```
-
-#### Options
-
-* **pre** - `true` will render this text asset inside a `<pre>`formatted block.
-
-#### Notes
-
-If conservation of paragraph formatting is desired within text content, the `text/markdown` asset type should be used.
-
-
-### Markdown Text
-
-```json
-{
-  "name" : "my-markdown",
-  "contentType" : "text/markdown",
-  "location" : "./assets/my-markdown.md",
-}
-```
-
-```markdown
-<!-- @asset, ref: 'my-markdown' -->
-```
-
-#### Options
-
-(none)
-
-#### Notes
-
-Since sections are already written natively in Markdown, we encourage content to be written inline when possible.  The Markdown asset type allows you to use a pre-existing Markdown files.  The Markdown will be rendered as if they were inlined directly into the section.  The same sanitization and other github variant rules apply.
-
-
-### Code Snippet
-
-```json
-{
-  "name" : "my-ruby-snippet",
-  "contentType" : "text/code",
-  "location" : "./assets/my-ruby-snippet.rb",
-  "syntax" : "ruby",
-  "highlighting" : true,
-  "lineNumbers" : false
-}
-```
-
-```markdown
-<!-- @asset, ref: 'my-ruby-snippet', syntax: 'ruby', highlighting: true, lineNumbers: false -->
-```
-
-#### Options
-
-* **syntax** - string.  One of the supported syntax highlighting options from (whichever library we use).  If none is specified the code formatter will try to make a relevant guess
-* **highlighting** - boolean, default true. Whether to use syntax highlighting on the snippet
-* **lineNumers** - boolean, default false.  Whether to show line numbers in a gutter next to the code
-
-#### Notes
-
-Markdown provides native support for code blocks.  If found, these code blocks will also get rendered by our syntax-highlighting library.  Code blocks using triple back-tick (```lang) are supported just like on Github.  If more control is desired, or if you need to reference code samples that are already self contained in separate files, a Code Snippet asset may be more convenient.
-
-### Video
-
-```json
-
-{
-  "name" : "my-video",
-  "contentType" : "video/mp4",
-  "location" : "./assets/my-video.mp4",
-  "allowFullScreen" : true,
-  "transcriptTimings" : "./assets/my-video-transcript.txt",
-  "subtitles" : "./assets/my-video.srt",
-  "startTime" : 15
-}
-
-```
-
-```markdown
-
-<!-- @asset, ref: 'my-video', startTime: '321', endTime: '381' -->
-
-```
-
-#### Options
-
-* **allowFullScreen** - boolean, default true.  Whether to include a full-screen button in the player
-
-#### Notes
-
-Markdown provides native support for code blocks.  If found, these code blocks will also get rendered by our syntax-highlighting library.  Code blocks using triple back-tick (```lang) are supported just like on Github.  If more control is desired, or if you need to reference code samples that are already self contained in separate files, a Code Snippet asset may be more convenient.
-
--------------------------------------
-
-### More Types Coming Soon
-
-* URL - url (special behaviors for various kinds of URLs, some documented here)
-* Image - image/jpeg
-* Audio - audio/mp3
-
-
-## Remote Asset Types
-
-In addition to assets that you create and include in your Outlearn Package directory structure, Sections can reference assets that are hosted elsewhere.  For examples, see the [OLM Specification](http://www.github.com/outlearn-content/outlearn-olm-spec)
-
-**Note**: Remote Assets are not declared in the outlearn.json file.  They are parsed directly from the `@asset` annotation syntax via their URL instead of an OLP reference ID.
-
-### Future asset types
-
-Outlearn is considering support for future asset types; in particular more rich interactive options for encouraging hands-on learning, including:
-
-* SSH Terminal (to connect to a particular machine and run commands)
-* REPL (with support for various languages)
-* Docker image (with links to launch on various platforms depending on team integrations)
-
-# Importing OLP
-
-To import an OLP directory to Outlearn, put it in a Github repo that is public or that you are authorized to access.  Log in to Outlearn with your Github credentials (or link your Github account under *Settings*), and navigate to *Import Module*, where you can specify the Github location for your module which will then be imported into your Outlearn account.
-
-Many more details on import are coming, including information about a command-line API for importing, and imports from additional web-based sources.
-
-# Example OLP
+## Examples of OLP
 
 For many examples of content in OLM and OLP format, please refer to the [Outlearn Content](http://www.github.com/outlearn-content) repo on Github.
