@@ -1,3 +1,16 @@
+<!--
+name: outlearn-package-specification
+version : 0.5.0
+title : "Outlearn Package (OLP) Specification"
+description: "Everything you need to know to create content using OLP (Outlearn Package), a directory format for defining Paths, Modules, and Assets for import into the Outlearn learning catalog."
+homepage : "https://github.com/outlearn-content/outlearn-olp-spec"
+author : "Will Koffel"
+license : "CC-BY",
+contact : "will@outlearn.com"
+-->
+
+<!-- @section -->
+
 # Outlearn Package Specification
 
 > THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5- WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF MAY 15, 2015
@@ -70,6 +83,8 @@ All the details of specifying Paths, Modules, and Assets are described below.
 
 **Note**: an Outlearn Package doesn't have to specify Paths, Modules, *or* Assets.  Each is optional.  OLP may be used to import a Path and all its Modules, or maybe just the independent Modules for a single author, with Paths assembled separately in another OLP import.
 
+<!-- @section -->
+
 ## Assembling Paths
 
 The `paths` array defines specifications for one or more Paths to be imported by this package.
@@ -117,6 +132,8 @@ The Modules (see below for more on Modules) that make up a path are included by 
 ```
 
 **Note**: the Modules in an OLP import get loaded first.  So referencing a Module loaded in the same import as the referencing Path will work fine, and will include the freshly-imported version.
+
+<!-- @section -->
 
 ## Defining Modules
 
@@ -204,6 +221,8 @@ And the top of the module OLM file would include any catalog metadata attributes
 
 See [the OLM specification](https://github.com/outlearn-content/outlearn-olm-spec) for more, including how to define *section* breaks, and how to enrich the content with learning features like *todo* items, *multiple choice* exercises, and more.
 
+<!-- @section -->
+
 ## Declaring Assets
 
 Outlearn supports uploading and hosting images and videos.  This is useful for private content, and for some public content that may not be hosted elsewhere, making it hard to reference from regular Markdown.
@@ -229,7 +248,7 @@ And then reference that asset in your content Markdown:
 
 A diagram of our architecture can be seen below:
 
-<!-- @asset, "name": "architecture-diagram" -->
+< !-- @asset, "name": "architecture-diagram" -->
 ```
 
 At import time, Outlearn will upload the bundled image asset and replace the `@asset` tag with the appropriate `<img>` tag to render the hosted image in your content.
@@ -241,10 +260,13 @@ At import time, Outlearn will upload the bundled image asset and replace the `@a
 
 Video assets that are remotely hosted, for example through YouTube or Vimeo, can be included directly from the OLM content.  For examples, see the [OLM Specification](http://www.github.com/outlearn-content/outlearn-olm-spec)
 
+<!-- @section, "tracked" : false -->
 
 ## Unknown JSON keys and JSON comments
 
 The outlearn parser will ignore any unrecognized fields in the `outlearn.json` file.  And the specification ensures that no supported keys will ever start with an underscore character (`_`), so such fields are safe to use for comments or other custom data in your files.
+
+<!-- @section, "tracked" : false -->
 
 ## Examples of OLP
 
