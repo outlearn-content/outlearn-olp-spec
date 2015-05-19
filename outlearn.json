@@ -1,13 +1,9 @@
 {
   "olpVersion" : "0.5",
 
-  "paths" : [],
-
   "modules" : [
     {
       "olm" : "./olp-spec.md"
     }
-  ],
-
-  "assets" : []
+  ]
 }
