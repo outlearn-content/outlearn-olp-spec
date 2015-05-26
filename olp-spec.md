@@ -7,8 +7,8 @@
 "description": "Everything you need to know to create content using OLP (Outlearn Package) directory format.",
 "homepage" : "https://github.com/outlearn-content/outlearn-olp-spec",
 "author" : "Will Koffel",
-"license" : "CC-BY",
-"contact" : { email: "will@outlearn.com" }
+"license" : "CC BY",
+"contact" : { "email" : "will@outlearn.com" }
 }
 -->
 
