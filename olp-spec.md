@@ -229,7 +229,7 @@ And the top of the module OLM file would include any catalog metadata attributes
 -->
 ```
 
-See [the OLM specification](https://github.com/outlearn-content/outlearn-olm-spec) for more, including how to define *section* breaks, and how to enrich the content with learning features like *todo* items, *multiple choice* exercises, and more.
+See [the OLM specification](https://github.com/outlearn-content/outlearn-olm-spec) for more, including how to define *section* breaks, and how to enrich the content with learning features like *task* items, *multiple choice* exercises, and more.
 
 <!-- @section -->
 
