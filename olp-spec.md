@@ -6,7 +6,7 @@ title : "Outlearn Package (OLP) Specification"
 description: "Everything you need to know to create content using OLP (Outlearn Package), a directory format for defining Paths, Modules, and Assets for import into the Outlearn learning catalog."
 homepage : "https://github.com/outlearn-content/outlearn-olp-spec"
 author : "Will Koffel"
-license : "CC-BY"
+license : "CC BY"
 contact : { email: "will@outlearn.com" }
 -->
 
