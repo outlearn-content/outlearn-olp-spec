@@ -103,6 +103,7 @@ Each Path specification must have the following required attributes:
 | title | Learning to Dance the Tango | A human-readable title for your Path. |
 | description | A great way to learn everyone's favorite dance, step-by-step. | A short description of your Path, to be used when viewing in the Outlearn catalog. We recommend less than around 130 characters so that the description fits on the Path card in the catalog.|
 | freshnessDate | 2015-05-25 | the date when you last confirmed that the content is still valid and up-to-date |
+| contact | {"email" : "will@outlearn.com"} | The allowed keys are "email" and "twitter" |
 | privacy | public | For now, may be "public" or "private".  Private paths will not show up in search or in the public catalog, but are available to the owner, and to any members of the owning organization. |
 | pages | [ { page_spec }+ ] | An array of at least one Context Page or Learning Module, constituting the Path content itself. |
 
@@ -199,7 +200,7 @@ The available attributes for a Learning Module are:
 | description | ✓ | An introduction to the steps of the tango. | short (less than 130 characters) description of this Module, to be used various places in the Outlearn content catalog |
 | coverImage |  | ./modules/learning-the-tango-steps/cover.jpg | TODO: what are the details on these? |
 | coverColor |  | #eecc25 | TODO: any limitations? which formats are supported? |
-| sections | ✓ | [ { section_spec }+ ] | An array of at least one Context Page or Learning Module, constituting the Path content itself. |
+| sections | ✓ | [ { section_spec }+ ] | An array of at least one section that specifies a title and content location. |
 
 ### An easier way --- Modules in OLM
 
