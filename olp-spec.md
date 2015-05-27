@@ -1,13 +1,15 @@
 <!--
-name: outlearn-package-specification
-version : 0.5.0
-freshnessDate: 2015-05-18
-title : "Outlearn Package (OLP) Specification"
-description: "Everything you need to know to create content using OLP (Outlearn Package), a directory format for defining Paths, Modules, and Assets for import into the Outlearn learning catalog."
-homepage : "https://github.com/outlearn-content/outlearn-olp-spec"
-author : "Will Koffel"
-license : "CC BY"
-contact : { email: "will@outlearn.com" }
+{
+"name" : "outlearn-package-specification",
+"version" : "0.5.0",
+"freshnessDate": 2015-05-18,
+"title" : "Outlearn Package (OLP) Specification",
+"description": "Everything you need to know to create content using OLP (Outlearn Package) directory format.",
+"homepage" : "https://github.com/outlearn-content/outlearn-olp-spec",
+"author" : "Will Koffel",
+"license" : "CC BY",
+"contact" : { "email" : "will@outlearn.com" }
+}
 -->
 
 <!-- @section -->
@@ -41,8 +43,9 @@ Here's a very simple `outlearn.json` file:
   "paths" : [
     {
       "name" : "learning-to-tango",
+      "freshnessDate" : 2015-05-25,
       "title" : "Learning to Dance the Tango",
-      "description" : "A learning path for those new to the marvelous tango dance, we'll go through all the basics, and all that's left for you to do is practice until your feet are sore!",
+      "description" : "A learning path for those new to the marvelous tango dance, we'll go through all the basics.",
       "privacy" : "public",
       "pages" : [
         {"page" : "./pages/introduction.md"},
@@ -78,7 +81,7 @@ In this example, we specify a package which:
 
 1. Uploads and hosts a video asset referenced as "*steps-video*" to locally imported Modules.
 2. Creates two Learning Modules based on enriched Markdown files (Outlearn Markdown, aka *OLM*)
-3. Assembles a single Path called "*learning-to-tango*", out of those two created Modules, one Module from another source in the Outlearn catalog, and three Path Pages with content from local Markdown files.
+3. Assembles a single Path called "*learning-to-tango*", out of those two created Modules, one Module from another source in the Outlearn catalog, and three Context Pages with content from local Markdown files.
 
 All the details of specifying Paths, Modules, and Assets are described below.
 
@@ -98,24 +101,26 @@ Each Path specification must have the following required attributes:
 |-----------|--------|-------|
 | name | learning-to-tango | unique within an Outlearn user or organization, alphanumeric+dashes |
 | title | Learning to Dance the Tango | A human-readable title for your Path. |
-| description | A great way to learn everyone's favorite dance, step-by-step. | A short description of your Path, to be used when viewing in the Outlearn catalog. |
+| description | A great way to learn everyone's favorite dance, step-by-step. | A short description of your Path, to be used when viewing in the Outlearn catalog. We recommend less than around 130 characters so that the description fits on the Path card in the catalog.|
+| freshnessDate | 2015-05-25 | the date when you last confirmed that the content is still valid and up-to-date |
+| contact | {"email" : "will@outlearn.com"} | The allowed keys are "email" and "twitter" |
 | privacy | public | For now, may be "public" or "private".  Private paths will not show up in search or in the public catalog, but are available to the owner, and to any members of the owning organization. |
-| pages | [ { page_spec }+ ] | An array of at least one Path Page or Learning Module, constituting the Path content itself. |
+| pages | [ { page_spec }+ ] | An array of at least one Context Page or Learning Module, constituting the Path content itself. |
 
-There are two types of page in a path, *Path Pages* and *Learning Modules*.  Both play an important role as described below.
+There are two types of page in a path, *Context Pages* and *Learning Modules*.  Both play an important role as described below.
 
-### Path Pages
+### Context Pages
 
-Path Pages (aka "Context Pages", or just "Pages") are simple rendered Markdown pages, specific to the Path, which act as interstitials and contextualize the surrounding Modules for your audience.  Pages have varied uses, including:
+Context Pages (aka "Path Pages", or just "Pages") are simple rendered Markdown pages, specific to the Path, which act as interstitials and contextualize the surrounding Modules for your audience.  Pages have varied uses, including:
 
 * Introduction to a Path.  What should your learners expect to get out of this?  Why did you choose to assemble this particular set of Modules together?
 * Important context before beginning a Module.  Maybe this next Module has some gotchas to look out for.  Maybe you want to point out in advance why this content is particularly relevant within your project or organization.
 * Describe offline learning steps.  Pages are a way to put a "pause" in the Path, for example to instruct your learners to wait until their next offline manager meeting before continuing on.
 * Specific concluding thoughts.  What else would you share with your audience as they are digesting this new material?  What final takeaways do you have to solidify the importance of the preceding Modules?
 
-Pages are optional, but highly encouraged.  Without your voice helping to narrate a Path, it is little more than the sum of its Modules.
+Context Pages are optional, but highly encouraged.  Without your voice helping to narrate a Path, it is little more than the sum of its Modules.
 
-In the manifest `pages[]` array, Path Pages are defined as:
+In the manifest `pages[]` array, Context Pages are defined as:
 
 ```json
 {"page" : "./pages/introduction.md"}
@@ -154,6 +159,7 @@ An OLP `modules` array contains simple JSON objects, one for each module being i
 {
   "name" : "learning-the-tango-steps",
   "version" : "1.0",
+  "freshnessDate" : 2015-05-25,
   "title" : "Learning the Tango Steps",
   "license" : "CC-BY",
   "homepage" : "tango.outlearn.com",
@@ -186,18 +192,19 @@ The available attributes for a Learning Module are:
 | name | ✓ | learning-the-tango-steps | unique within an Outlearn user or organization, alphanumeric+dashes |
 | version | ✓ | 1.0 | a [semantic version number](http://semver.org/) |
 | title | ✓ | Learning the Tango Steps | human-readable title for the Module |
+| freshnessDate | ✓ | 2015-05-25 | the date when you last confirmed that the content is still valid and up-to-date |
 | license |  | CC-BY | A free-form string specifying a license for this content |
 | homepage |  | tango.outlearn.com | URL homepage for this author or original content source |
 | author |  | Dancing Doreen | free-form field for original author credit |
 | organization |  | Outlearn Dance Studios | free-form field specifying an organization related to this content |
-| description | ✓ | An introduction to the steps of the tango. | short description of this Module, to be used various places in the Outlearn content catalog |
+| description | ✓ | An introduction to the steps of the tango. | short (less than 130 characters) description of this Module, to be used various places in the Outlearn content catalog |
 | coverImage |  | ./modules/learning-the-tango-steps/cover.jpg | TODO: what are the details on these? |
 | coverColor |  | #eecc25 | TODO: any limitations? which formats are supported? |
-| sections | ✓ | [ { section_spec }+ ] | An array of at least one Path Page or Learning Module, constituting the Path content itself. |
+| sections | ✓ | [ { section_spec }+ ] | An array of at least one section that specifies a title and content location. |
 
 ### An easier way --- Modules in OLM
 
-In many common cases, rather than list all the attributes and sections of a Module in JSON, that information can be written right in the Markdown content file.  
+In many common cases, rather than list all the attributes and sections of a Module in `outlearn.json`, that information can be written right in the Markdown content file.  
 
 For the example above, the `modules` array would instead include just:
 
@@ -209,18 +216,21 @@ And the top of the module OLM file would include any catalog metadata attributes
 
 ```xhtml
 <!--
+{
 "name": "learning-the-tango-steps",
 "version" : "1.0",
+"freshnessDate" : 2015-05-25,
 "title" : "Learning the Tango Steps",
 "license" : "CC-BY",
 "homepage" : "tango.outlearn.com",
 "author" : "Dancing Doreen",
 "organization" : "Outlearn Dance Studios",
 "description": "An introduction to the steps of the tango, including a video lesson."
+}
 -->
 ```
 
-See [the OLM specification](https://github.com/outlearn-content/outlearn-olm-spec) for more, including how to define *section* breaks, and how to enrich the content with learning features like *todo* items, *multiple choice* exercises, and more.
+See [the OLM specification](https://github.com/outlearn-content/outlearn-olm-spec) for more, including how to define *section* breaks, and how to enrich the content with learning features like *task* items, *multiple choice* exercises, and more.
 
 <!-- @section -->
 
