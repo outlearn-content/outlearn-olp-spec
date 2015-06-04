@@ -159,13 +159,13 @@ An OLP `modules` array contains simple JSON objects, one for each module being i
 {
   "name" : "learning-the-tango-steps",
   "version" : "1.0",
-  "freshnessDate" : 2015-05-25,
   "title" : "Learning the Tango Steps",
-  "license" : "CC-BY",
-  "homepage" : "tango.outlearn.com",
-  "author" : "Dancing Doreen",
-  "organization" : "Outlearn Dance Studios",
   "description": "An introduction to the steps of the tango, including a video lesson.",
+  "homepage" : "tango.outlearn.com",
+  "freshnessDate" : 2015-05-25,
+  "author" : "Dancing Doreen",
+  "license" : "CC-BY",
+  "organization" : "Outlearn Dance Studios",
   "sections" : [
     {
       "title": "Basic Steps",
@@ -192,12 +192,12 @@ The available attributes for a Learning Module are:
 | name | ✓ | learning-the-tango-steps | unique within an Outlearn user or organization, alphanumeric+dashes |
 | version | ✓ | 1.0 | a [semantic version number](http://semver.org/) |
 | title | ✓ | Learning the Tango Steps | human-readable title for the Module |
-| freshnessDate | ✓ | 2015-05-25 | the date when you last confirmed that the content is still valid and up-to-date |
-| license |  | CC-BY | A free-form string specifying a license for this content |
-| homepage |  | tango.outlearn.com | URL homepage for this author or original content source |
-| author |  | Dancing Doreen | free-form field for original author credit |
-| organization |  | Outlearn Dance Studios | free-form field specifying an organization related to this content |
 | description | ✓ | An introduction to the steps of the tango. | short (less than 130 characters) description of this Module, to be used various places in the Outlearn content catalog |
+| homepage |  | tango.outlearn.com | URL homepage for this author or original content source |
+| freshnessDate | ✓ | 2015-05-25 | the date when you last confirmed that the content is still valid and up-to-date |
+| author |  | Dancing Doreen | free-form field for original author credit |
+| license |  | CC-BY | A free-form string specifying a license for this content |
+| organization |  | Outlearn Dance Studios | free-form field specifying an organization related to this content |
 | coverImage |  | ./modules/learning-the-tango-steps/cover.jpg | TODO: what are the details on these? |
 | coverColor |  | #eecc25 | TODO: any limitations? which formats are supported? |
 | sections | ✓ | [ { section_spec }+ ] | An array of at least one section that specifies a title and content location. |
@@ -237,32 +237,6 @@ See [the OLM specification](https://github.com/outlearn-content/outlearn-olm-spe
 ## Declaring Assets
 
 Outlearn supports uploading and hosting images and videos.  This is useful for private content, and for some public content that may not be hosted elsewhere, making it hard to reference from regular Markdown.
-
-### Image Assets
-
-You can declare an image asset in OLP:
-
-```json
-"assets" : [
-  {
-    "name" : "architecture-diagram",
-    "contentType" : "image/jpeg",
-    "location" : "assets/production-system.jpeg"
-  }
-]
-```
-
-And then reference that asset in your content Markdown:
-
-```markdown
-### Architecture Diagram
-
-A diagram of our architecture can be seen below:
-
-< !-- @asset, "name": "architecture-diagram" -->
-```
-
-At import time, Outlearn will upload the bundled image asset and replace the `@asset` tag with the appropriate `<img>` tag to render the hosted image in your content.
 
 
 ### Video Assets
