@@ -245,9 +245,22 @@ Video assets that are remotely hosted, for example through YouTube or Vimeo, can
 
 <!-- @section, "tracked" : false -->
 
-## Unknown JSON keys and JSON comments
+## JSON comments
 
-The outlearn parser will ignore any unrecognized fields in the `outlearn.json` file.  And the specification ensures that no supported keys will ever start with an underscore character (`_`), so such fields are safe to use for comments or other custom data in your files.
+The OLP specification ensures that no supported keys will ever start with an underscore character (`_`), so such fields are safe to use for comments or other custom data in your files.
+
+```json
+{
+  "olpVersion" : "0.5",
+
+  "paths" : [
+    {
+      "name" : "learning-to-salsa",
+      "_comment" : "This path is still under construction."
+    }
+  ]
+}
+```
 
 <!-- @section, "tracked" : false -->
 
