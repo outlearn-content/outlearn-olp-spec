@@ -238,7 +238,7 @@ See [the OLM specification](https://github.com/outlearn-content/outlearn-olm-spe
 
 Outlearn supports uploading and hosting images and videos.  This is useful for private content, and for some public content that may not be hosted elsewhere, making it hard to reference from regular Markdown.
 
-> **Note**: Video and image uploads are not self-service features yet.  Please contact support@outlearn.com for help with these feature.
+> **Note**: Video and image uploads are not self-service features yet.  Please contact support@outlearn.com for help with these features.
 
 Video assets that are remotely hosted, for example through YouTube or Vimeo, can be included directly from the OLM content.  For examples, see the [OLM Specification](http://www.github.com/outlearn-content/outlearn-olm-spec)
 
