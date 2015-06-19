@@ -2,7 +2,7 @@
 {
 "name" : "outlearn-package-specification",
 "version" : "0.5.0",
-"freshnessDate": 2015-05-18,
+"freshnessDate": 2015-06-15,
 "title" : "Outlearn Package (OLP) Specification",
 "description": "Everything you need to know to create content using OLP (Outlearn Package) directory format.",
 "homepage" : "https://github.com/outlearn-content/outlearn-olp-spec",
@@ -16,7 +16,7 @@
 
 # Outlearn Package Specification
 
-> THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5- WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF MAY 15, 2015
+> THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5- WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF JUNE 15, 2015
 
 An Outlearn Package, or *OLP* is a directory containing an `outlearn.json` manifest file defining Paths, Modules, and Assets for import into the Outlearn learning catalog.
 
@@ -198,8 +198,8 @@ The available attributes for a Learning Module are:
 | author |  | Dancing Doreen | free-form field for original author credit |
 | license |  | CC-BY | A free-form string specifying a license for this content |
 | organization |  | Outlearn Dance Studios | free-form field specifying an organization related to this content |
-| coverImage |  | ./modules/learning-the-tango-steps/cover.jpg | TODO: what are the details on these? |
-| coverColor |  | #eecc25 | TODO: any limitations? which formats are supported? |
+| coverImage |  | ./modules/learning-the-tango-steps/cover.jpg | An image that will be stylized grayscale and used as a background for your module header.  Should be JPG or PNG, we recommend keeping the file size down for faster loading of your content, dimensions roughly 1255x440px.  Presentation may not be precise, so patterns and low-contrast images work best. |
+| coverColor |  | #eecc25 | An HTML color for this path.  If none is selected, a pretty decent one will be chosen for you.  Warning: please resist the temptation to make your learning ugly. |
 | sections | ✓ | [ { section_spec }+ ] | An array of at least one section that specifies a title and content location. |
 
 ### An easier way --- Modules in OLM
