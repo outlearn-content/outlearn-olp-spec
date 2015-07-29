@@ -2,10 +2,10 @@
 {
 "name" : "outlearn-package-specification",
 "version" : "0.5.0",
-"freshnessDate": 2015-05-18,
 "title" : "Outlearn Package (OLP) Specification",
 "description": "Everything you need to know to create content using OLP (Outlearn Package) directory format.",
 "homepage" : "https://github.com/outlearn-content/outlearn-olp-spec",
+"freshnessDate": 2015-07-29,
 "author" : "Will Koffel",
 "license" : "CC BY",
 "contact" : { "email" : "will@outlearn.com" }
@@ -16,7 +16,7 @@
 
 # Outlearn Package Specification
 
-> THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5- WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF MAY 15, 2015
+> THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5- WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF JULY 29, 2015
 
 An Outlearn Package, or *OLP* is a directory containing an `outlearn.json` manifest file defining Paths, Modules, and Assets for import into the Outlearn learning catalog.
 
@@ -161,10 +161,11 @@ An OLP `modules` array contains simple JSON objects, one for each module being i
   "version" : "1.0",
   "title" : "Learning the Tango Steps",
   "description": "An introduction to the steps of the tango, including a video lesson.",
-  "homepage" : "tango.outlearn.com",
-  "freshnessDate" : 2015-05-25,
+  "homepage" : "http://tango.outlearn.com/",
+  "canonicalSource" : "http://tango.outlearn.com/steps",
+  "freshnessDate" : 2015-07-29,
   "author" : "Dancing Doreen",
-  "license" : "CC-BY",
+  "license" : "CC BY",
   "organization" : "Outlearn Dance Studios",
   "sections" : [
     {
@@ -193,7 +194,8 @@ The available attributes for a Learning Module are:
 | version | ✓ | 1.0 | a [semantic version number](http://semver.org/) |
 | title | ✓ | Learning the Tango Steps | human-readable title for the Module |
 | description | ✓ | An introduction to the steps of the tango. | short (less than 130 characters) description of this Module, to be used various places in the Outlearn content catalog |
-| homepage |  | tango.outlearn.com | URL homepage for this author or original content source |
+| homepage |  | http://tango.outlearn.com/ | URL for author homepage or original content source, visible to learners |
+| canonicalSource |  | http://tango.outlearn.com/steps | URL for original content source, not visible to learners, creates a [canonical ULR](https://support.google.com/webmasters/answer/139066?hl=en) link element that directs SEO benefits to the original post  |
 | freshnessDate | ✓ | 2015-05-25 | the date when you last confirmed that the content is still valid and up-to-date |
 | author |  | Dancing Doreen | free-form field for original author credit |
 | license |  | CC-BY | A free-form string specifying a license for this content |
