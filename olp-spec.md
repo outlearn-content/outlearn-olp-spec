@@ -16,7 +16,9 @@
 
 # Outlearn Package Specification
 
+
 > THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5- WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF JULY 29, 2015
+
 
 An Outlearn Package, or *OLP* is a directory containing an `outlearn.json` manifest file defining Paths, Modules, and Assets for import into the Outlearn learning catalog.
 
@@ -200,8 +202,8 @@ The available attributes for a Learning Module are:
 | author |  | Dancing Doreen | free-form field for original author credit |
 | license |  | CC-BY | A free-form string specifying a license for this content |
 | organization |  | Outlearn Dance Studios | free-form field specifying an organization related to this content |
-| coverImage |  | ./modules/learning-the-tango-steps/cover.jpg | TODO: what are the details on these? |
-| coverColor |  | #eecc25 | TODO: any limitations? which formats are supported? |
+| coverImage |  | ./modules/learning-the-tango-steps/cover.jpg | An image that will be stylized grayscale and used as a background for your module header.  Should be JPG or PNG, we recommend keeping the file size down for faster loading of your content, dimensions roughly 1255x440px.  Presentation may not be precise, so patterns and low-contrast images work best. |
+| coverColor |  | #eecc25 | An HTML color for this path.  If none is selected, a pretty decent one will be chosen for you.  Warning: please resist the temptation to make your learning ugly. |
 | sections | ✓ | [ { section_spec }+ ] | An array of at least one section that specifies a title and content location. |
 
 ### An easier way --- Modules in OLM
@@ -240,7 +242,7 @@ See [the OLM specification](https://github.com/outlearn-content/outlearn-olm-spe
 
 Outlearn supports uploading and hosting images and videos.  This is useful for private content, and for some public content that may not be hosted elsewhere, making it hard to reference from regular Markdown.
 
-> **Note**: Video and image uploads are not self-service features yet.  Please contact support@outlearn.com for help with these feature.
+> **Note**: Video and image uploads are not self-service features yet.  Please contact support@outlearn.com for help with these features.
 
 Video assets that are remotely hosted, for example through YouTube or Vimeo, can be included directly from the OLM content.  For examples, see the [OLM Specification](http://www.github.com/outlearn-content/outlearn-olm-spec)
 
