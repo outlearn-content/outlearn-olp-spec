@@ -206,7 +206,7 @@ The available attributes for a Learning Module are:
 | coverColor |  | #eecc25 | An HTML color for this path.  If none is selected, a pretty decent one will be chosen for you.  Warning: please resist the temptation to make your learning ugly. |
 | sections | ✓ | [ { section_spec }+ ] | An array of at least one section that specifies a title and content location. |
 
-### An easier way --- Modules in OLM
+### An easier way &mdash; Modules in OLM
 
 In many common cases, rather than list all the attributes and sections of a Module in `outlearn.json`, that information can be written right in the Markdown content file.  
 
