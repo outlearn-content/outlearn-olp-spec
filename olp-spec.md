@@ -119,7 +119,7 @@ The Path specification may also include one or more of the following optional at
 |-----------|--------|-------|
 | coverImage | ./assets/cover.jpg | Image that will be stylized grayscale and used as a background for your path header.  Should be JPG or PNG, we recommend keeping the file size down for faster loading of your content, dimensions roughly 1255x440px.  Presentation may not be precise, so patterns and low-contrast images work best |
 | coverColor | #eecc25 | An HTML color for this path.  If none is selected, a pretty decent one will be chosen for you.  Warning: please resist the temptation to make your learning ugly |
-| collaborationChannel| https://outlearn.slack.com/messages/general/ | Link to a collaboration location such as Slack, HipChat, a discussion forum, etc. |
+| collaborationChannel| https://outlearn.slack.com/ messages/general/ | Link to a collaboration location such as Slack, HipChat, a discussion forum, etc. |
 
 Including a collaboration channel link in your Path definition will create an icon at the bottom right corner as shown below.
 
