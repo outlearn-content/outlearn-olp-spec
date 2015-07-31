@@ -5,7 +5,7 @@
 "title" : "Outlearn Package (OLP) Specification",
 "description": "Everything you need to know to create content using OLP (Outlearn Package) directory format.",
 "homepage" : "https://github.com/outlearn-content/outlearn-olp-spec",
-"freshnessDate": 2015-07-29,
+"freshnessDate": 2015-07-31,
 "author" : "Will Koffel",
 "license" : "CC BY",
 "contact" : { "email" : "will@outlearn.com" }
@@ -17,7 +17,7 @@
 # Outlearn Package Specification
 
 
-> THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5- WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF JULY 29, 2015
+> THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5 &mdash; WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF JULY 31, 2015
 
 
 An Outlearn Package, or *OLP* is a directory containing an `outlearn.json` manifest file defining Paths, Modules, and Assets for import into the Outlearn learning catalog.
@@ -96,20 +96,35 @@ All the details of specifying Paths, Modules, and Assets are described below.
 
 The `paths` array defines specifications for one or more Paths to be imported by this package.
 
-### Path Metadata
+### Path Metadata - Required Attributes
 
 Each Path specification must have the following required attributes:
 
 | attribute | sample | notes |
 |-----------|--------|-------|
-| name | learning-to-tango | unique within an Outlearn user or organization, alphanumeric+dashes |
-| title | Learning to Dance the Tango | A human-readable title for your Path. |
-| description | A great way to learn everyone's favorite dance, step-by-step. | A short description of your Path, to be used when viewing in the Outlearn catalog. We recommend less than around 130 characters so that the description fits on the Path card in the catalog.|
-| freshnessDate | 2015-05-25 | the date when you last confirmed that the content is still valid and up-to-date |
-| privacy | public | For now, may be "public" or "private".  Private paths will not show up in search or in the public catalog, but are available to the owner, and to any members of the owning organization. |
-| pages | [ { page_spec }+ ] | An array of at least one Context Page or Learning Module, constituting the Path content itself. |
+| name | learning-to-tango | Unique within an Outlearn user or organization, alphanumeric+dashes |
+| title | Learning to Dance the Tango | Human-readable title for your Path |
+| description | A great way to learn everyone's favorite dance, step-by-step. | Short description of your Path, to be used when viewing in the Outlearn catalog. We recommend less than around 130 characters so that the description fits on the Path card in the catalog|
+| freshnessDate | 2015-05-25 | Date when you last confirmed that the content is still valid and up-to-date |
+| privacy | public | For now, may be "public" or "private".  Private paths will not show up in search or in the public catalog, but are available to the owner, and to any members of the owning organization |
+| pages | [ { page_spec }+ ] | An array of at least one Context Page or Learning Module, constituting the Path content itself |
 
-There are two types of page in a path, *Context Pages* and *Learning Modules*.  Both play an important role as described below.
+There are two types of page in a path, *Context Pages* and *Learning Modules*.  Both play an important role as described later in this section.
+
+### Path Metadata - Optional Attributes
+
+The Path specification may also include one or more of the following optional attributes:
+
+| attribute | sample | notes |
+|-----------|--------|-------|
+| coverImage | ./assets/cover.jpg | Image that will be stylized grayscale and used as a background for your path header.  Should be JPG or PNG, we recommend keeping the file size down for faster loading of your content, dimensions roughly 1255x440px.  Presentation may not be precise, so patterns and low-contrast images work best |
+| coverColor | #eecc25 | An HTML color for this path.  If none is selected, a pretty decent one will be chosen for you.  Warning: please resist the temptation to make your learning ugly |
+| collaborationChannel| https://outlearn.slack.com/messages/general/ | Link to a collaboration location such as Slack, HipChat, a discussion forum, etc. |
+
+Including a collaboration channel link in your Path definition will create an icon at the bottom right corner as shown below.
+
+![Collaboration Channel Icon](https://raw.githubusercontent.com/outlearn-content/outlearn-publishing/master/images/collaborate.png)
+
 
 ### Context Pages
 
@@ -192,19 +207,19 @@ The available attributes for a Learning Module are:
 
 | attribute | required | sample | notes |
 |-----------|----------|--------|-------|
-| name | ✓ | learning-the-tango-steps | unique within an Outlearn user or organization, alphanumeric+dashes |
-| version | ✓ | 1.0 | a [semantic version number](http://semver.org/) |
-| title | ✓ | Learning the Tango Steps | human-readable title for the Module |
-| description | ✓ | An introduction to the steps of the tango. | short (less than 130 characters) description of this Module, to be used various places in the Outlearn content catalog |
+| name | ✓ | learning-the-tango-steps | Unique within an Outlearn user or organization, alphanumeric+dashes |
+| version | ✓ | 1.0 | [Semantic version number](http://semver.org/) |
+| title | ✓ | Learning the Tango Steps | Human-readable title for the Module |
+| description | ✓ | An introduction to the steps of the tango. | Short (less than 130 characters) description of this Module, to be used various places in the Outlearn content catalog |
 | homepage |  | http://tango.outlearn.com/ | URL for author homepage or original content source, visible to learners |
 | canonicalSource |  | http://tango.outlearn.com/steps | URL for original content source, not visible to learners, creates a [canonical ULR](https://support.google.com/webmasters/answer/139066?hl=en) link element that directs SEO benefits to the original post  |
-| freshnessDate | ✓ | 2015-05-25 | the date when you last confirmed that the content is still valid and up-to-date |
-| author |  | Dancing Doreen | free-form field for original author credit |
-| license |  | CC-BY | A free-form string specifying a license for this content |
-| organization |  | Outlearn Dance Studios | free-form field specifying an organization related to this content |
-| coverImage |  | ./modules/learning-the-tango-steps/cover.jpg | An image that will be stylized grayscale and used as a background for your module header.  Should be JPG or PNG, we recommend keeping the file size down for faster loading of your content, dimensions roughly 1255x440px.  Presentation may not be precise, so patterns and low-contrast images work best. |
-| coverColor |  | #eecc25 | An HTML color for this path.  If none is selected, a pretty decent one will be chosen for you.  Warning: please resist the temptation to make your learning ugly. |
-| sections | ✓ | [ { section_spec }+ ] | An array of at least one section that specifies a title and content location. |
+| freshnessDate | ✓ | 2015-05-25 | Date when you last confirmed that the content is still valid and up-to-date |
+| author |  | Dancing Doreen | Free-form string for original author credit |
+| license |  | CC-BY | Free-form string specifying a license for this content |
+| organization |  | Outlearn Dance Studios | Free-form string specifying an organization related to this content |
+| coverImage |  | ./modules/learning-the-tango-steps/cover.jpg | Image that will be stylized grayscale and used as a background for your module header.  Should be JPG or PNG, we recommend keeping the file size down for faster loading of your content, dimensions roughly 1255x440px.  Presentation may not be precise, so patterns and low-contrast images work best |
+| coverColor |  | #eecc25 | HTML color for this path.  If none is selected, a pretty decent one will be chosen for you.  Warning: please resist the temptation to make your learning ugly |
+| sections | ✓ | [ { section_spec }+ ] | Array of at least one section that specifies a title and content location |
 
 ### An easier way &mdash; Modules in OLM
 
