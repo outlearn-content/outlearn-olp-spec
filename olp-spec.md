@@ -161,8 +161,10 @@ Sometimes you want to write a short note about a particular module and adding a 
 To add a Preface to a Module in your path, use the key `preface` after specifying a Module to include.
 
 ```json
-{"module" : "dancer-doreen/history-of-dance", "preface" : "Make sure to read the part about Finnish Tango."},
-{"module" : "tango-embrace-basics", "preface" : "Even if you are experienced dancer, don't skip this because it will be super helpful later."}
+{"module" : "dancer-doreen/history-of-dance",
+ "preface" : "Make sure to read the part about Finnish Tango."},
+{"module" : "tango-embrace-basics",
+ "preface" : "Even if you are experienced dancer, don't skip this because it will be super helpful later."}
 ```
 
 
