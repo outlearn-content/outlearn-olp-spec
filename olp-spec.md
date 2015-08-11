@@ -125,8 +125,17 @@ Including a collaboration channel link in your Path definition will create an ic
 
 ![Collaboration Channel Icon](https://raw.githubusercontent.com/outlearn-content/outlearn-publishing/master/images/collaborate.png)
 
+### Path Modules
 
-### Context Pages
+The Modules (see below for more on Modules) that make up a path are included by reference to their `owner/module-name` in the Outlearn catalog.  If an `owner` is not specified, it defaults to the owner doing the current import.
+
+```json
+{"module" : "dancer-doreen/history-of-dance"},
+{"module" : "tango-embrace-basics"}
+```
+**Note**: the Modules in an OLP import get loaded first.  So referencing a Module loaded in the same import as the referencing Path will work fine, and will include the freshly-imported version.
+
+### Context Pages and Module Prefaces
 
 Context Pages (aka "Path Pages", or just "Pages") are simple rendered Markdown pages, specific to the Path, which act as interstitials and contextualize the surrounding Modules for your audience.  Pages have varied uses, including:
 
@@ -145,16 +154,18 @@ In the manifest `pages[]` array, Context Pages are defined as:
 
 The referenced Markdown file supports [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) (but *not* Outlearn OLM enrichments).  A title will be extracted based on a Markdown header of any size at the top of the file (page markdown that does not start with a header will trigger an error on import).  The remainder of the file will be rendered to the body of the page.  Pages are, by convention, placed in a `./pages/` directory inside the OLP root.
 
-### Path Modules
+Sometimes you want to write a short note about a particular module and adding a Context Page seems like overkill. Maybe you are including in your Path a tutorial on JavaScript written by someone else and you want to make sure your learners pay attention to the second section. In such a case, adding a Preface to the Module is the perfect solution. Instead of appearing on a separate Page before the Module, a Preface appears at the top of the Module as shown below.
 
-The Modules (see below for more on Modules) that make up a path are included by reference to their `owner/module-name` in the Outlearn catalog.  If an `owner` is not specified, it defaults to the owner doing the current import.
+![Collaboration Channel Icon](https://raw.githubusercontent.com/outlearn-content/outlearn-publishing/master/images/preface.png)
+
+To add a Preface to a Module in your path, use the key `preface` after specifying a Module to include.
 
 ```json
-{"module" : "dancer-doreen/history-of-dance"},
-{"module" : "tango-embrace-basics"}
+{"module" : "dancer-doreen/history-of-dance", "preface" : "Make sure to read the part about Finnish Tango."},
+{"module" : "tango-embrace-basics", "preface" : "Even if you are experienced dancer, don't skip this because it will be super helpful later."}
 ```
 
-**Note**: the Modules in an OLP import get loaded first.  So referencing a Module loaded in the same import as the referencing Path will work fine, and will include the freshly-imported version.
+
 
 <!-- @section -->
 
