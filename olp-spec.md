@@ -253,13 +253,14 @@ And the top of the module OLM file would include any catalog metadata attributes
 {
 "name": "learning-the-tango-steps",
 "version" : "1.0",
-"freshnessDate" : 2015-05-25,
 "title" : "Learning the Tango Steps",
+"description": "An introduction to the steps of the tango, including a video lesson.",
+"tags" : "dance, tango, intro",
+"freshnessDate" : 2015-05-25,
 "license" : "CC-BY",
 "homepage" : "tango.outlearn.com",
 "author" : "Dancing Doreen",
-"organization" : "Outlearn Dance Studios",
-"description": "An introduction to the steps of the tango, including a video lesson."
+"organization" : "Outlearn Dance Studios"
 }
 -->
 ```
