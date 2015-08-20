@@ -2,8 +2,6 @@
   "olpVersion" : "0.5",
 
   "modules" : [
-    {
-      "olm" : "./olp-spec.md"
-    }
+    {"olm" : "./olp-spec.md"}
   ]
 }

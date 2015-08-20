@@ -190,7 +190,8 @@ An OLP `modules` array contains simple JSON objects, one for each module being i
   "name" : "learning-the-tango-steps",
   "version" : "1.0",
   "title" : "Learning the Tango Steps",
-  "description": "An introduction to the steps of the tango, including a video lesson.",
+  "description" : "An introduction to the steps of the tango, including a video lesson.",
+  "tags" : "dance, tango, intro",
   "homepage" : "http://tango.outlearn.com/",
   "canonicalSource" : "http://tango.outlearn.com/steps",
   "freshnessDate" : 2015-07-29,
@@ -224,6 +225,7 @@ The available attributes for a Learning Module are:
 | version | ✓ | 1.0 | [Semantic version number](http://semver.org/) |
 | title | ✓ | Learning the Tango Steps | Human-readable title for the Module |
 | description | ✓ | An introduction to the steps of the tango. | Short (less than 130 characters) description of this Module, to be used various places in the Outlearn content catalog |
+| tags |  | dance, tango, intro | Comma-separated string of suggested tags. We will match this against a whitelist of industry standard tags for developer topics |
 | homepage |  | http://tango.outlearn.com/ | URL for author homepage or original content source, visible to learners |
 | canonicalSource |  | http://tango.outlearn.com/steps | URL for original content source, not visible to learners, creates a [canonical ULR](https://support.google.com/webmasters/answer/139066?hl=en) link element that directs SEO benefits to the original post  |
 | freshnessDate | ✓ | 2015-05-25 | Date when you last confirmed that the content is still valid and up-to-date |
