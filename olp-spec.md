@@ -1,11 +1,11 @@
 <!--
 {
 "name" : "outlearn-package-specification",
-"version" : "0.5.0",
+"version" : "0.5.1",
 "title" : "Outlearn Package (OLP) Specification",
 "description": "Everything you need to know to create content using OLP (Outlearn Package) directory format.",
 "homepage" : "https://github.com/outlearn-content/outlearn-olp-spec",
-"freshnessDate": 2015-07-31,
+"freshnessDate": 2015-11-17,
 "author" : "Will Koffel",
 "license" : "CC BY",
 "contact" : { "email" : "will@outlearn.com" }
@@ -17,7 +17,7 @@
 # Outlearn Package Specification
 
 
-> THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5 &mdash; WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF JULY 31, 2015
+> THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5 &mdash; WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF NOVEMBER 17, 2015
 
 
 An Outlearn Package, or *OLP* is a directory containing an `outlearn.json` manifest file defining Paths, Modules, and Assets for import into the Outlearn learning catalog.
@@ -61,12 +61,8 @@ Here's a very simple `outlearn.json` file:
   ],
 
   "modules" : [
-    {
-      "olm" : "./modules/tango-embrace-basics.olm"
-    },
-    {
-      "olm" : "./modules/learning-the-tango-steps.olm"
-    }
+    {"olm" : "./modules/tango-embrace-basics.olm"},
+    {"olm" : "./modules/learning-the-tango-steps.olm"}
   ],
 
   "assets" : [
@@ -137,7 +133,7 @@ The Modules (see below for more on Modules) that make up a path are included by 
 
 ### Context Pages and Module Prefaces
 
-Context Pages (aka "Path Pages", or just "Pages") are simple rendered Markdown pages, specific to the Path, which act as interstitials and contextualize the surrounding Modules for your audience.  Pages have varied uses, including:
+Context Pages (aka "Path Pages", or just "Pages") are simple rendered Markdown pages, specific to the Path, which give structure to the path and contextualize the surrounding Modules for your audience.  Pages have varied uses, including:
 
 * Introduction to a Path.  What should your learners expect to get out of this?  Why did you choose to assemble this particular set of Modules together?
 * Important context before beginning a Module.  Maybe this next Module has some gotchas to look out for.  Maybe you want to point out in advance why this content is particularly relevant within your project or organization.
@@ -199,18 +195,12 @@ An OLP `modules` array contains simple JSON objects, one for each module being i
   "license" : "CC BY",
   "organization" : "Outlearn Dance Studios",
   "sections" : [
-    {
-      "title": "Basic Steps",
-      "location": "modules/learning-the-tango-steps/sections/basic-steps.md"
-    },
-    {
-      "title": "Corté, Swivel, and Turn",
-      "location": "modules/learning-the-tango-steps/sections/advanced-steps.md"
-    },
-    {
-      "title": "Watch the Pros",
-      "location" : "modules/learning-the-tango-steps/sections/video-lesson.md"
-    }
+    {"title": "Basic Steps",
+    "location": "modules/learning-the-tango-steps/sections/basic-steps.md"},
+    {"title": "Corté, Swivel, and Turn",
+    "location": "modules/learning-the-tango-steps/sections/advanced-steps.md"},
+    {"title": "Watch the Pros",
+    "location" : "modules/learning-the-tango-steps/sections/video-lesson.md"}
   ]
 }
 ```
@@ -232,7 +222,6 @@ The available attributes for a Learning Module are:
 | author |  | Dancing Doreen | Free-form string for original author credit |
 | license |  | CC-BY | Free-form string specifying a license for this content |
 | organization |  | Outlearn Dance Studios | Free-form string specifying an organization related to this content |
-| coverImage |  | ./modules/learning-the-tango-steps/cover.jpg | Image that will be stylized grayscale and used as a background for your module header.  Should be JPG or PNG, we recommend keeping the file size down for faster loading of your content, dimensions roughly 1255x440px.  Presentation may not be precise, so patterns and low-contrast images work best |
 | coverColor |  | #eecc25 | HTML color for this path.  If none is selected, a pretty decent one will be chosen for you.  Warning: please resist the temptation to make your learning ugly |
 | sections | ✓ | [ { section_spec }+ ] | Array of at least one section that specifies a title and content location |
 
