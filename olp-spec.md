@@ -215,6 +215,7 @@ The available attributes for a Learning Module are:
 | version | ✓ | 1.0 | [Semantic version number](http://semver.org/) |
 | title | ✓ | Learning the Tango Steps | Human-readable title for the Module |
 | description | ✓ | An introduction to the steps of the tango. | Short (less than 130 characters) description of this Module, to be used various places in the Outlearn content catalog |
+| privacy | | public | For now, may be "public" or "private".  Private modules will not show up in search or in the public catalog, but are available to the owner, and to any members of the owning organization |
 | tags |  | dance, tango, intro | Comma-separated string of suggested tags. We will match this against a whitelist of industry standard tags for developer topics |
 | homepage |  | http://tango.outlearn.com/ | URL for author homepage or original content source, visible to learners |
 | canonicalSource |  | http://tango.outlearn.com/steps | URL for original content source, not visible to learners, creates a [canonical ULR](https://support.google.com/webmasters/answer/139066?hl=en) link element that directs SEO benefits to the original post  |
