@@ -102,7 +102,6 @@ Each Path specification must have the following required attributes:
 | title | Learning to Dance the Tango | Human-readable title for your Path |
 | description | A great way to learn everyone's favorite dance, step-by-step. | Short description of your Path, to be used when viewing in the Outlearn catalog. We recommend less than around 130 characters so that the description fits on the Path card in the catalog|
 | freshnessDate | 2015-05-25 | Date when you last confirmed that the content is still valid and up-to-date |
-| privacy | public | For now, may be "public" or "private".  Private paths will not show up in search or in the public catalog, but are available to the owner, and to any members of the owning organization |
 | pages | [ { page_spec }+ ] | An array of at least one Context Page or Learning Module, constituting the Path content itself |
 
 There are two types of page in a path, *Context Pages* and *Learning Modules*.  Both play an important role as described later in this section.
@@ -113,6 +112,7 @@ The Path specification may also include one or more of the following optional at
 
 | attribute | sample | notes |
 |-----------|--------|-------|
+| privacy | public | For now, may be "public" or "private".  Private paths will not show up in search or in the public catalog, but are available to the owner, and to any members of the owning organization |
 | coverImage | ./assets/cover.jpg | Image that will be stylized grayscale and used as a background for your path header.  Should be JPG or PNG, we recommend keeping the file size down for faster loading of your content, dimensions roughly 1255x440px.  Presentation may not be precise, so patterns and low-contrast images work best |
 | coverColor | #eecc25 | An HTML color for this path.  If none is selected, a pretty decent one will be chosen for you.  Warning: please resist the temptation to make your learning ugly |
 | collaborationChannel| [https://outlearn.slack.com/ messages/collaboration/](https://outlearn.slack.com/messages/collaboration/) | Link to a collaboration location such as Slack, HipChat, a discussion forum, etc. |
