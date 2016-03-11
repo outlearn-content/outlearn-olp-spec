@@ -80,7 +80,7 @@ In this example, we specify a package which:
 
 1. Uploads and hosts a video asset referenced as "*steps-video*" to locally imported Modules.
 2. Creates two Learning Modules based on enriched Markdown files (Outlearn Markdown, aka *OLM*)
-3. Assembles a single Path called "*learning-to-tango*", out of those two created Modules, one Module from another source in the Outlearn catalog, and three Context Pages with content from local Markdown files.
+3. Assembles a single Path called "*learning-to-tango*", out of those two created Modules, one Module from another source in the Outlearn catalog, and three Guide Pages with content from local Markdown files.
 
 All the details of specifying Paths, Modules, and Assets are described below.
 
@@ -102,9 +102,9 @@ Each Path specification must have the following required attributes:
 | title | Learning to Dance the Tango | Human-readable title for your Path |
 | description | A great way to learn everyone's favorite dance, step-by-step. | Short description of your Path, to be used when viewing in the Outlearn catalog. We recommend less than around 130 characters so that the description fits on the Path card in the catalog|
 | freshnessDate | 2015-05-25 | Date when you last confirmed that the content is still valid and up-to-date |
-| pages | [ { page_spec }+ ] | An array of at least one Context Page or Learning Module, constituting the Path content itself |
+| pages | [ { page_spec }+ ] | An array of at least one Guide Page or Learning Module, constituting the Path content itself |
 
-There are two types of page in a path, *Context Pages* and *Learning Modules*.  Both play an important role as described later in this section.
+There are two types of page in a path, *Guide Pages* and *Learning Modules*.  Both play an important role as described later in this section.
 
 ### Path Metadata - Optional Attributes
 
@@ -131,18 +131,18 @@ The Modules (see below for more on Modules) that make up a path are included by 
 ```
 **Note**: the Modules in an OLP import get loaded first.  So referencing a Module loaded in the same import as the referencing Path will work fine, and will include the freshly-imported version.
 
-### Context Pages and Module Prefaces
+### Guide Pages and Module Prefaces
 
-Context Pages (aka "Path Pages", or just "Pages") are simple rendered Markdown pages, specific to the Path, which give structure to the path and contextualize the surrounding Modules for your audience.  Pages have varied uses, including:
+Guide Pages (aka "Path Pages", or just "Pages") are simple rendered Markdown pages, specific to the Path, which give structure to the path and contextualize the surrounding Modules for your audience.  Pages have varied uses, including:
 
 * Introduction to a Path.  What should your learners expect to get out of this?  Why did you choose to assemble this particular set of Modules together?
 * Important context before beginning a Module.  Maybe this next Module has some gotchas to look out for.  Maybe you want to point out in advance why this content is particularly relevant within your project or organization.
 * Describe offline learning steps.  Pages are a way to put a "pause" in the Path, for example to instruct your learners to wait until their next offline manager meeting before continuing on.
 * Specific concluding thoughts.  What else would you share with your audience as they are digesting this new material?  What final takeaways do you have to solidify the importance of the preceding Modules?
 
-Context Pages are optional, but highly encouraged.  Without your voice helping to narrate a Path, it is little more than the sum of its Modules.
+Guide Pages are optional, but highly encouraged.  Without your voice helping to narrate a Path, it is little more than the sum of its Modules.
 
-In the manifest `pages[]` array, Context Pages are defined as:
+In the manifest `pages[]` array, Guide Pages are defined as:
 
 ```json
 {"page" : "./pages/introduction.md"}
@@ -150,9 +150,9 @@ In the manifest `pages[]` array, Context Pages are defined as:
 
 The referenced Markdown file supports [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) (but *not* Outlearn OLM enrichments).  A title will be extracted based on a Markdown header of any size at the top of the file (page markdown that does not start with a header will trigger an error on import).  The remainder of the file will be rendered to the body of the page.  Pages are, by convention, placed in a `./pages/` directory inside the OLP root.
 
-Sometimes you want to write a short note about a particular module and adding a Context Page seems like overkill. Maybe you are including in your Path a tutorial on JavaScript written by someone else and you want to make sure your learners pay attention to the second section. In such a case, adding a Preface to the Module is the perfect solution. Instead of appearing on a separate Page before the Module, a Preface appears at the top of the Module as shown below.
+Sometimes you want to write a short note about a particular module and adding a Guide Page seems like overkill. Maybe you are including in your Path a tutorial on JavaScript written by someone else and you want to make sure your learners pay attention to the second section. In such a case, adding a Preface to the Module is the perfect solution. Instead of appearing on a separate Page before the Module, a Preface appears at the top of the Module as shown below. Prefaces also show up on the home page of the Path to give an overview of what's included and why.
 
-![Collaboration Channel Icon](https://raw.githubusercontent.com/outlearn-content/outlearn-publishing/master/images/preface.png)
+![Preface](https://raw.githubusercontent.com/outlearn-content/outlearn-publishing/master/images/preface.png)
 
 To add a Preface to a Module in your path, use the key `preface` after specifying a Module to include.
 
@@ -186,7 +186,6 @@ An OLP `modules` array contains simple JSON objects, one for each module being i
   "name" : "learning-the-tango-steps",
   "version" : "1.0",
   "title" : "Learning the Tango Steps",
-  "description" : "An introduction to the steps of the tango, including a video lesson.",
   "tags" : "dance, tango, intro",
   "homepage" : "http://tango.outlearn.com/",
   "canonicalSource" : "http://tango.outlearn.com/steps",
@@ -214,7 +213,6 @@ The available attributes for a Learning Module are:
 | name | ✓ | learning-the-tango-steps | Unique within an Outlearn user or organization, alphanumeric+dashes |
 | version | ✓ | 1.0 | [Semantic version number](http://semver.org/) |
 | title | ✓ | Learning the Tango Steps | Human-readable title for the Module |
-| description | ✓ | An introduction to the steps of the tango. | Short (less than 130 characters) description of this Module, to be used various places in the Outlearn content catalog |
 | privacy | | public | For now, may be "public" or "private".  Private modules will not show up in search or in the public catalog, but are available to the owner, and to any members of the owning organization |
 | tags |  | dance, tango, intro | Comma-separated string of suggested tags. We will match this against a whitelist of industry standard tags for developer topics |
 | homepage |  | http://tango.outlearn.com/ | URL for author homepage or original content source, visible to learners |
@@ -244,7 +242,6 @@ And the top of the module OLM file would include any catalog metadata attributes
 "name": "learning-the-tango-steps",
 "version" : "1.0",
 "title" : "Learning the Tango Steps",
-"description": "An introduction to the steps of the tango, including a video lesson.",
 "tags" : "dance, tango, intro",
 "freshnessDate" : 2015-05-25,
 "license" : "CC-BY",
