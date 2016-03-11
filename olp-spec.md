@@ -3,7 +3,6 @@
 "name" : "outlearn-package-specification",
 "version" : "0.5.2",
 "title" : "Outlearn Package (OLP) Specification",
-"description": "Everything you need to know to create content using OLP (Outlearn Package) directory format.",
 "homepage" : "https://github.com/outlearn-content/outlearn-olp-spec",
 "freshnessDate": 2016-03-11,
 "author" : "Will Koffel",
