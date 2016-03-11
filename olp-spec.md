@@ -1,11 +1,11 @@
 <!--
 {
 "name" : "outlearn-package-specification",
-"version" : "0.5.1",
+"version" : "0.5.2",
 "title" : "Outlearn Package (OLP) Specification",
 "description": "Everything you need to know to create content using OLP (Outlearn Package) directory format.",
 "homepage" : "https://github.com/outlearn-content/outlearn-olp-spec",
-"freshnessDate": 2015-11-17,
+"freshnessDate": 2016-03-11,
 "author" : "Will Koffel",
 "license" : "CC BY",
 "contact" : { "email" : "will@outlearn.com" }
@@ -17,7 +17,7 @@
 # Outlearn Package Specification
 
 
-> THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5 &mdash; WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF NOVEMBER 17, 2015
+> THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5.2 &mdash; WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF MARCH 11, 2016
 
 
 An Outlearn Package, or *OLP* is a directory containing an `outlearn.json` manifest file defining Paths, Modules, and Assets for import into the Outlearn learning catalog.
