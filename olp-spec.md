@@ -1,10 +1,10 @@
 <!--
 {
 "name" : "outlearn-package-specification",
-"version" : "0.5.2",
+"version" : "0.5.3",
 "title" : "Outlearn Package (OLP) Specification",
 "homepage" : "https://github.com/outlearn-content/outlearn-olp-spec",
-"freshnessDate": 2016-03-11,
+"freshnessDate": 2016-03-23,
 "author" : "Will Koffel",
 "license" : "CC BY",
 "contact" : { "email" : "will@outlearn.com" }
@@ -16,10 +16,10 @@
 # Outlearn Package Specification
 
 
-> THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5.2 &mdash; WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF MARCH 11, 2016
+> THIS IS A DRAFT DOCUMENT AND REFERS TO OLP v0.5.3 &mdash; WE WELCOME FEEDBACK AS THIS FORMAT EVOLVES - CURRENT AS OF MARCH 23, 2016
 
 
-An Outlearn Package, or *OLP* is a directory containing an `outlearn.json` manifest file defining Paths, Modules, and Assets for import into the Outlearn learning catalog.
+An Outlearn Package, or *OLP* is a directory containing an `outlearn.json` manifest file defining Paths and Modules for import into the Outlearn learning catalog.
 
 The OLP format aims to:
 
@@ -28,12 +28,11 @@ The OLP format aims to:
 
 ## Basic OLP Structure
 
-An OLP directory must contain an `outlearn.json` file at its root.  This manifest file may contain four top-level keys:
+An OLP directory must contain an `outlearn.json` file at its root.  This manifest file may contain three top-level keys:
 
 * **"olpVersion"** - a [semantic version number](http://semver.org/) representing which version of the OLP format is being used here.  It is optional, but *encouraged*, and will default to the latest version.
 * **"paths"** - an array of Path specs imported by this package.
 * **"modules"** - an array of Learning Module specs imported by this package.
-* **"assets"** - an array of Assets available to Modules imported by this package.
 
 Here's a very simple `outlearn.json` file:
 
@@ -62,28 +61,18 @@ Here's a very simple `outlearn.json` file:
   "modules" : [
     {"olm" : "./modules/tango-embrace-basics.olm"},
     {"olm" : "./modules/learning-the-tango-steps.olm"}
-  ],
-
-  "assets" : [
-    {
-      "_comment" : "Video upload is not a self-service feature yet.  Please contact support@outlearn.com for help with this feature.",
-      "name" : "steps-video",
-      "contentType" : "video/mp4",
-      "location" : "assets/tango-steps.mp4"
-    }
   ]
 }
 ```
 
 In this example, we specify a package which:
 
-1. Uploads and hosts a video asset referenced as "*steps-video*" to locally imported Modules.
-2. Creates two Learning Modules based on enriched Markdown files (Outlearn Markdown, aka *OLM*)
-3. Assembles a single Path called "*learning-to-tango*", out of those two created Modules, one Module from another source in the Outlearn catalog, and three Guide Pages with content from local Markdown files.
+1. Creates two Learning Modules based on enriched Markdown files (Outlearn Markdown, aka *OLM*)
+2. Assembles a single Path called "*learning-to-tango*", out of those two created Modules, one Module from another source in the Outlearn catalog, and three Guide Pages with content from local Markdown files.
 
-All the details of specifying Paths, Modules, and Assets are described below.
+All the details of specifying Paths and Modules are described below.
 
-**Note**: an Outlearn Package doesn't have to specify Paths, Modules, *or* Assets.  Each is optional.  OLP may be used to import a Path and all its Modules, or maybe just the independent Modules for a single author, with Paths assembled separately in another OLP import.
+**Note**: an Outlearn Package doesn't have to specify Paths *or* Modules.  Each is optional.  OLP may be used to import a Path and all its Modules, or maybe just the independent Modules for a single author, with Paths assembled separately in another OLP import.
 
 <!-- @section -->
 
@@ -253,17 +242,9 @@ And the top of the module OLM file would include any catalog metadata attributes
 
 See [the OLM specification](https://github.com/outlearn-content/outlearn-olm-spec) for more, including how to define *section* breaks, and how to enrich the content with learning features like *task* items, *multiple choice* exercises, and more.
 
+
+
 <!-- @section -->
-
-## Declaring Assets
-
-Outlearn supports uploading and hosting images and videos.  This is useful for private content, and for some public content that may not be hosted elsewhere, making it hard to reference from regular Markdown.
-
-> **Note**: Video and image uploads are not self-service features yet.  Please contact support@outlearn.com for help with these features.
-
-Video assets that are remotely hosted, for example through YouTube or Vimeo, can be included directly from the OLM content.  For examples, see the [OLM Specification](http://www.github.com/outlearn-content/outlearn-olm-spec)
-
-<!-- @section, "tracked" : false -->
 
 ## JSON comments
 
